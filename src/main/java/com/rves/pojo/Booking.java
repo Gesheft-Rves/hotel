@@ -1,7 +1,11 @@
 package com.rves.pojo;
 
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 public class Booking {
@@ -11,7 +15,7 @@ public class Booking {
     private Integer id;
 
     @Column(name = "date_buking")
-    private Date date_buking;
+    private Timestamp date_buking;
 
     @OneToOne
     @JoinColumn
@@ -54,11 +58,11 @@ public class Booking {
         this.id = id;
     }
 
-    public Date getDate_buking() {
+    public Timestamp getDate_buking() {
         return date_buking;
     }
 
-    public void setDate_buking(Date date_buking) {
+    public void setDate_buking(Timestamp date_buking) {
         this.date_buking = date_buking;
     }
 

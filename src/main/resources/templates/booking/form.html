@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
+    <link href="/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="//oss.maxcdn.com/momentjs/2.8.2/moment.min.js"></script>
+    <script src="/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <style type="text/css">
+        /**
+         * Override feedback icon position
+         * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
+         */
+        #meetingForm .dateContainer .form-control-feedback {
+            top: 0;
+            right: -15px;
+        }
+    </style>
 
     <title th:text="'Новая бронь'"></title>
 
@@ -9,20 +22,13 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
     <h2  th:text="'Новая бронь'"></h2>
     <div>
-        <form class="form-horizontal" th:object="${booking}" th:action="@{/booking/save}" method="post">
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}" /> <!--  А так отображаются все ошибки, также -->
+        </ul>
+        <form  class="form-horizontal" th:object="${booking}" th:action="@{/booking/save}" method="post">
             <input type="hidden" th:field="*{id}"/>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label" th:text="'Дата бронирования'"></label>
-                <div class="col-sm-10">
-                    <div class="col-sm-10">
-                        <input type="date" placeholder="Введите дату создания брони" class="form-control" th:field="*{date_buking}" th:required="required"/>
-                    </div>
-                </div>
-            </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label" th:text="'Номер'"></label>
@@ -39,6 +45,7 @@
                                     </option>
                                 </div>
                             </select>
+                            <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="alert alert-danger" role="alert"></div>
                         </div>
                     </div>
                 </div>
@@ -49,6 +56,7 @@
                 <div class="col-sm-10">
                     <div class="col-sm-10">
                         <input type="date" placeholder="Введите дату заезда гостя" class="form-control" th:field="*{arrival_date}" th:required="required"/>
+                        <div th:if="${#fields.hasErrors('arrival_date')}" th:errors="*{arrival_date}" class="alert alert-danger" role="alert"></div>
                     </div>
                 </div>
             </div>
@@ -58,6 +66,7 @@
                 <div class="col-sm-10">
                     <div class="col-sm-10">
                         <input type="date" placeholder="Введите дату выезда гостя" class="form-control" th:field="*{date_of_departure}" th:required="required"/>
+                        <div th:if="${#fields.hasErrors('date_of_departure')}" th:errors="*{date_of_departure}" class="alert alert-danger" role="alert"></div>
                     </div>
                 </div>
             </div>
@@ -66,6 +75,7 @@
                 <button type="submit" class="btn btn-default btn-block" th:text="'Сохранить'"></button>
             </div>
         </form>
+
     </div>
 </div>
 
