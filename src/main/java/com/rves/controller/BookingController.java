@@ -2,7 +2,7 @@ package com.rves.controller;
 
 import com.rves.Dto.BookingDto;
 import com.rves.pojo.Booking;
-import com.rves.pojo.Rooms;
+import com.rves.pojo.Room;
 import com.rves.services.BookingService;
 import com.rves.services.RoomsService;
 import com.rves.validator.BookingValidator;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -57,15 +56,15 @@ public class BookingController {
     @RequestMapping("/booking/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
         Booking booking = service.getById(id);
-        List<Rooms> rooms = roomsService.list();
+        List<Room> rooms = roomsService.list();
         model.addAttribute("roomslist", rooms);
         model.addAttribute("booking", booking);
         return "/booking/form";
     }
 
     @RequestMapping("/booking/new")
-    public String newGroup(Model model){
-        List<Rooms> rooms =  roomsService.list();
+    public String newBooking(Model model){
+        List<Room> rooms =  roomsService.list();
         model.addAttribute("roomslist", rooms);
         model.addAttribute("booking", new Booking());
         return "/booking/form";
@@ -76,7 +75,7 @@ public class BookingController {
         bookingValidator.validate(bookingDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            List<Rooms> rooms =  roomsService.list();
+            List<Room> rooms =  roomsService.list();
             model.addAttribute("roomslist", rooms);
             return "/booking/form";
         }
