@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title th:text="'Карточка брони'"></title>
+
+    <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2 th:text="'Карточка брони'"></h2>
+    <div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Дата бронирования</label>
+                <div class="col-sm-9">
+                    <p class="form-control-static" th:text="${booking.date_buking}">Дата бронирования</p>
+                </div>
+
+                <label class="col-sm-3 control-label">Забронированный номер</label>
+                <div class="col-sm-9">
+                    <p class="form-control-static" th:with="room=${booking.room}" th:text="${room.no}">Забронированный номер</p>
+                </div>
+
+                <label class="col-sm-3 control-label">Дата заезда гостя</label>
+                <div class="col-sm-9">
+                    <p class="form-control-static" th:text="${booking.arrival_date}">Дата заезда гостя</p>
+                </div>
+
+                <label class="col-sm-3 control-label">Дата выезда гостя</label>
+                <div class="col-sm-9">
+                    <p class="form-control-static" th:text="${booking.date_of_departure}">Дата выезда гостя</p>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

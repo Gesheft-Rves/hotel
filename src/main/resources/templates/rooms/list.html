@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title th:text="Номера"></title>
+
+    <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+</div>
+    <a th:href="${'/rooms/new'}"> Создать новый номер </a>
+    <div th:if="${not #lists.isEmpty(rooms)}">
+        <h2> Список номеров </h2>
+        <table class="table table-striped">
+            <tr>
+                <th th:text="ID"></th>
+                <th th:text="Номер"></th>
+                <th th:text="Категория"></th>
+                <th th:text="Действия"></th>
+            </tr>
+            <tr th:each="room : ${rooms}">
+                <td th:text="${room.id}"></td>
+                <td th:text="${room.no}"></td>
+                <td th:text="${room.type}"></td>
+                <td>
+                    <ul class="list-inline">
+                        <li><a th:href="${'/rooms/delete/' + room.id}" th:text="Удалить"></a> </li>
+                        <li><a th:href="${'/rooms/edit/' + room.id}" th:text="Редактировать"></a> </li>
+                        <li><a th:href="${'/rooms/details/' + room.id}" th:text="Карточка"></a> </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
