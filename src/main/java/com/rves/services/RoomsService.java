@@ -1,7 +1,7 @@
 package com.rves.services;
 
 
-import com.rves.pojo.Rooms;
+import com.rves.pojo.Room;
 import com.rves.repositories.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoomsService implements PojoService<Rooms> {
+public class RoomsService implements PojoService<Room> {
 
     private RoomsRepository roomsRepository;
 
@@ -19,17 +19,17 @@ public class RoomsService implements PojoService<Rooms> {
     }
 
     @Override
-    public List<Rooms> list() {
+    public List<Room> list() {
         return roomsRepository.findAll();
     }
 
     @Override
-    public Rooms getById(Integer id) {
+    public Room getById(Integer id) {
         return roomsRepository.getOne(id);
     }
 
     @Override
-    public Rooms save(Rooms obj) {
+    public Room save(Room obj) {
         return roomsRepository.save(obj);
     }
 

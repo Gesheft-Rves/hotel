@@ -1,9 +1,11 @@
 package com.rves.pojo;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
-public class Rooms {
+public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -15,12 +17,12 @@ public class Rooms {
     @Column(name = "type")
     private Integer type;
 
-    public Rooms() {
+    public Room() {
     }
 
     @Override
     public String toString() {
-        return "Rooms{" +
+        return "Room{" +
                 "id=" + id +
                 ", no=" + no +
                 ", type=" + type +

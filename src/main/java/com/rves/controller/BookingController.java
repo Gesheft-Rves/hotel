@@ -1,17 +1,20 @@
 package com.rves.controller;
 
+import com.rves.Dto.BookingDto;
 import com.rves.pojo.Booking;
-import com.rves.pojo.Rooms;
+import com.rves.pojo.Room;
 import com.rves.services.BookingService;
 import com.rves.services.RoomsService;
+import com.rves.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,8 @@ public class BookingController {
 
     private BookingService service;
     private RoomsService roomsService;
+    private BookingValidator bookingValidator;
+
 
     @Autowired
     public void setRoomsService(RoomsService roomsService) {
@@ -30,13 +35,15 @@ public class BookingController {
         this.service = service;
     }
 
+    @Autowired
+    public void setBookingValidator(BookingValidator bookingValidator) {
+        this.bookingValidator = bookingValidator;
+    }
+
     @RequestMapping("/booking/list")
     public String list(Model model){
         List<Booking> bookings = service.list();
         model.addAttribute("bookings", bookings);
-//        for (int i = 0; i < bookings.size(); i++) {
-//            System.out.println(bookings.get(i).toString());
-//        }
         return "/booking/list";
     }
 
@@ -49,23 +56,31 @@ public class BookingController {
     @RequestMapping("/booking/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
         Booking booking = service.getById(id);
-        List<Rooms> rooms = roomsService.list();
-        model.addAttribute("bookingList", rooms);
+        List<Room> rooms = roomsService.list();
+        model.addAttribute("roomslist", rooms);
         model.addAttribute("booking", booking);
         return "/booking/form";
     }
 
     @RequestMapping("/booking/new")
-    public String newGroup(Model model){
-        List<Rooms> rooms = (ArrayList<Rooms>) roomsService.list();
+    public String newBooking(Model model){
+        List<Room> rooms =  roomsService.list();
         model.addAttribute("roomslist", rooms);
         model.addAttribute("booking", new Booking());
         return "/booking/form";
     }
 
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
-    public String save(Booking booking){
-        service.save(booking);
+    public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model) {
+        bookingValidator.validate(bookingDto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            List<Room> rooms =  roomsService.list();
+            model.addAttribute("roomslist", rooms);
+            return "/booking/form";
+        }
+        System.out.println(bookingDto);
+        service.saveFromDto(bookingDto);
         return "redirect:/booking/list";
     }
 

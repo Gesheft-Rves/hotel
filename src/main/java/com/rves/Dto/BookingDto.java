@@ -1,46 +1,38 @@
-package com.rves.pojo;
+package com.rves.Dto;
 
-import javax.persistence.*;
+import com.rves.pojo.Room;
+
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@Entity
-public class Booking {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class BookingDto {
+    @NotNull
     private Integer id;
 
-    @Column(name = "date_buking")
+    @FutureOrPresent
+    @NotNull
     private Timestamp date_buking;
 
-    @OneToOne
-    @JoinColumn
+    @NotNull
     private Room room;
 
-    @Column(name = "arrival_date")
+    @FutureOrPresent
+    @NotNull
     private Date arrival_date;
 
-
-    @Column(name = "date_of_departure")
+    @Future
+    @NotNull
     private Date date_of_departure;
-
-    public Booking() {
-    }
-
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "id=" + id +
-                ", date_buking=" + date_buking +
-                ", rooms=" + room +
-                ", arrival_date=" + arrival_date +
-                ", date_of_departure=" + date_of_departure +
-                '}';
-    }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Room getRoom() {
@@ -49,10 +41,6 @@ public class Booking {
 
     public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Timestamp getDate_buking() {

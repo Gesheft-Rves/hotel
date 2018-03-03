@@ -1,6 +1,6 @@
 package com.rves.controller;
 
-import com.rves.pojo.Rooms;
+import com.rves.pojo.Room;
 import com.rves.services.RoomsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class RoomsController {
 
     @RequestMapping("/rooms/list")
     public String list(Model model){
-        List<Rooms> rooms = service.list();
+        List<Room> rooms = service.list();
         model.addAttribute("rooms", rooms);
         return "/rooms/list";
     }
@@ -37,8 +37,8 @@ public class RoomsController {
 
     @RequestMapping("/rooms/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
-        Rooms room = service.getById(id);
-        List<Rooms> rooms = service.list();
+        Room room = service.getById(id);
+        List<Room> rooms = service.list();
         model.addAttribute("rooms", rooms);
         model.addAttribute("room", room);
         return "/rooms/form";
@@ -46,14 +46,14 @@ public class RoomsController {
 
     @RequestMapping("/rooms/new")
     public String newGroup(Model model){
-        ArrayList<Rooms> rooms = (ArrayList<Rooms>) service.list();
-        model.addAttribute("room", new Rooms());
+        ArrayList<Room> rooms = (ArrayList<Room>) service.list();
+        model.addAttribute("room", new Room());
         return "/rooms/form";
     }
 
     @RequestMapping(value = "/rooms/save", method = RequestMethod.POST)
-    public String save(Rooms rooms){
-        service.save(rooms);
+    public String save(Room room){
+        service.save(room);
         return "redirect:/rooms/list";
     }
 
