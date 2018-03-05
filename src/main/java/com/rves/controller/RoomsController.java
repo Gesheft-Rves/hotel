@@ -1,7 +1,9 @@
 package com.rves.controller;
 
 import com.rves.pojo.Room;
+import com.rves.pojo.TypeRoom;
 import com.rves.services.RoomsService;
+import com.rves.services.TypeRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +11,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class RoomsController {
 
     private RoomsService service;
+    private TypeRoomService typeRoomService;
+
+    @Autowired
+    public void setTypeRoomService(TypeRoomService typeRoomService) {
+        this.typeRoomService = typeRoomService;
+    }
 
     @Autowired
     public void setService(RoomsService service) {
@@ -46,7 +53,8 @@ public class RoomsController {
 
     @RequestMapping("/rooms/new")
     public String newGroup(Model model){
-        ArrayList<Room> rooms = (ArrayList<Room>) service.list();
+        List<TypeRoom> typeRoomList = typeRoomService.list();
+        model.addAttribute("typeRoomList",typeRoomList);
         model.addAttribute("room", new Room());
         return "/rooms/form";
     }

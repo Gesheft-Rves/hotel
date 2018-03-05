@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title th:text="Категории"></title>
+
+    <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+</div>
+    <a th:href="${'/type/new'}"> Создать новую категорию </a>
+    <div th:if="${not #lists.isEmpty(typeRoomList)}">
+        <h2> Список категорий </h2>
+        <table class="table table-striped">
+            <tr>
+                <th th:text="ID"></th>
+                <th th:text="Наименование"></th>
+                <th th:text="Действия"></th>
+            </tr>
+            <tr th:each="typeRoom : ${typeRoomList}">
+                <td th:text="${typeRoom.id}"></td>
+                <td th:text="${typeRoom.name}"></td>
+                <td>
+                    <ul class="list-inline">
+                        <li><a th:href="${'/type/delete/' + typeRoom.id}" th:text="Удалить"></a> </li>
+                        <li><a th:href="${'/type/edit/' + typeRoom.id}" th:text="Редактировать"></a> </li>
+                        <li><a th:href="${'/type/details/' + typeRoom.id}" th:text="Карточка"></a> </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
