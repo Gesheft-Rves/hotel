@@ -27,6 +27,16 @@ public class BookingDto {
     @NotNull
     private Date date_of_departure;
 
+    private Integer roomType;
+
+    public Integer getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(Integer roomType) {
+        this.roomType = roomType;
+    }
+
     public Integer getId() {
         return id;
     }
