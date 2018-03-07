@@ -30,3 +30,4 @@ nbdist/
 !/pom.xml
 !/.gitignore
 /target/
+!/src/main/java/com/rves/services/RoomTypeService.java
