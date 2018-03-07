@@ -1,7 +1,7 @@
 package com.rves.controller;
 
-import com.rves.pojo.TypeRoom;
-import com.rves.services.TypeRoomService;
+import com.rves.pojo.RoomType;
+import com.rves.services.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,22 +9,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @Controller
-public class TypeRoomController {
-    private TypeRoomService service;
+public class RoomTypeController {
+    private RoomTypeService service;
 
     @Autowired
-    public void setService(TypeRoomService service) {
+    public void setService(RoomTypeService service) {
         this.service = service;
     }
 
 
     @RequestMapping("/type/list")
     public String list(Model model){
-        List<TypeRoom> typeRoomList = service.list();
-        model.addAttribute("typeRoomList", typeRoomList);
+        model.addAttribute("typeRoomList", service.list());
         return "/type/list";
     }
 
@@ -36,22 +33,20 @@ public class TypeRoomController {
 
     @RequestMapping("/type/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
-        TypeRoom typeRoom = service.getById(id);
-        List<TypeRoom> typeRoomList = service.list();
-        model.addAttribute("typeRoomList", typeRoomList);
-        model.addAttribute("typeRoom", typeRoom);
+        model.addAttribute("typeRoomList", service.list());
+        model.addAttribute("typeRoom", service.getById(id));
         return "/type/form";
     }
 
     @RequestMapping("/type/new")
     public String newCateg(Model model){
-        model.addAttribute("typeRoom", new TypeRoom());
+        model.addAttribute("typeRoom", new RoomType());
         return "/type/form";
     }
 
     @RequestMapping(value = "/type/save", method = RequestMethod.POST)
-    public String save(TypeRoom typeRoom){
-        service.save(typeRoom);
+    public String save(RoomType roomType){
+        service.save(roomType);
         return "redirect:/type/list";
     }
 

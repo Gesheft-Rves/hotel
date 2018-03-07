@@ -3,10 +3,9 @@ package com.rves.controller;
 import com.rves.Dto.BookingDto;
 import com.rves.pojo.Booking;
 import com.rves.pojo.Room;
-import com.rves.pojo.TypeRoom;
 import com.rves.services.BookingService;
 import com.rves.services.RoomsService;
-import com.rves.services.TypeRoomService;
+import com.rves.services.RoomTypeService;
 import com.rves.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,20 +16,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.text.ParseException;
-import java.util.List;
-
 @Controller
 public class BookingController {
 
     private BookingService bookingService;
     private RoomsService roomsService;
     private BookingValidator bookingValidator;
-    private TypeRoomService typeRoomService;
+    private RoomTypeService roomTypeService;
 
     @Autowired
-    public void setTypeRoomService(TypeRoomService typeRoomService) {
-        this.typeRoomService = typeRoomService;
+    public void setRoomTypeService(RoomTypeService roomTypeService) {
+        this.roomTypeService = roomTypeService;
     }
 
     @Autowired
@@ -50,8 +46,7 @@ public class BookingController {
 
     @RequestMapping("/booking/list")
     public String list(Model model){
-        List<Booking> bookings = bookingService.list();
-        model.addAttribute("bookings", bookings);
+        model.addAttribute("bookings", bookingService.list());
         return "/booking/list";
     }
 
@@ -63,25 +58,21 @@ public class BookingController {
 
     @RequestMapping("/booking/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
-        Booking booking = bookingService.getById(id);
-        List<Room> rooms = roomsService.list();
-        model.addAttribute("roomslist", rooms);
-        model.addAttribute("booking", booking);
+        model.addAttribute("roomslist", roomsService.list());
+        model.addAttribute("booking", bookingService.getById(id));
         return "/booking/form";
     }
 
     @RequestMapping("/booking/new")
     public String newBooking(Model model){
-        List<Room> rooms =  roomsService.list();
-        List<TypeRoom> typeRoomList = typeRoomService.list();
-        model.addAttribute("typeRoomList",typeRoomList);
-        model.addAttribute("roomslist", rooms);
+        model.addAttribute("roomTypes", roomTypeService.list());
+        model.addAttribute("roomslist", roomsService.list());
         model.addAttribute("booking", new BookingDto());
         return "/booking/form";
     }
 
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model) throws ParseException {
+    public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model){
         Room freeRoom = bookingService.freeRoomSearch(
                 bookingDto.getArrival_date(),
                 bookingDto.getDate_of_departure(),
@@ -93,7 +84,7 @@ public class BookingController {
         bookingValidator.validate(bookingDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("typeRoomList",typeRoomService.list());
+            model.addAttribute("roomTypes", roomTypeService.list());
             model.addAttribute("roomslist",  roomsService.list());
             return "/booking/form";
         }

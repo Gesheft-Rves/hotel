@@ -1,17 +1,41 @@
 package com.rves.pojo;
 
-public enum RoomType {
-    STANDART_SINGLE(1, "Станндартный 1-но местный"),
-    STANDART_DOUBLE(2, "Станндартный 2-х местный"),
-    FAMILY(3, "Семейный"),
-    JUNIOR_SUITE(4, "Полулюкс"),
-    LUX(5, "Люкс");
+import javax.persistence.*;
 
-    private int db_id;
-    private String description;
+@Entity
+public class RoomType {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-    RoomType(int db_id, String description) {
-        this.db_id = db_id;
-        this.description = description;
+    @Column(name = "name")
+    private String name;
+
+    public RoomType() {
+    }
+
+    @Override
+    public String toString() {
+        return "RoomType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

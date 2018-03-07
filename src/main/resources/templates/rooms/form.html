@@ -31,11 +31,11 @@
 
                         <select th:field="*{type}"  size="1" class="form-control" th:required="required"  >
                             <div>
-                                <option th:each="typeRoom : ${typeRoomList}"
-                                        th:value="${typeRoom.id}"
-                                        th:text="${typeRoom.name}"
+                                <option th:each="roomType : ${roomTypes}"
+                                        th:value="${roomType.id}"
+                                        th:text="${roomType.name}"
                                         th:with="temp=${room.type}"
-                                        th:selected="${#strings.equals(temp, typeRoom.name)}">
+                                        th:selected="${#strings.equals(temp, roomType.name)}">
                                 </option>
                             </div>
                         </select>

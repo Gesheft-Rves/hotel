@@ -44,7 +44,7 @@
                     <div class="col-sm-10">
                         <select  th:field="*{roomType}"  size="1" class="form-control" th:required="required"  >
                             <div>
-                                <option th:each="bookingRoomType : ${typeRoomList}"
+                                <option th:each="bookingRoomType : ${roomTypes}"
                                         th:value="${bookingRoomType.id}"
                                         th:text="${bookingRoomType.name}"
                                         th:with="temp=${booking.roomType}"

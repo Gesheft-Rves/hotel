@@ -7,8 +7,6 @@ import com.rves.pojo.Room;
 import com.rves.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -56,7 +54,7 @@ public class BookingService implements PojoService<Booking> {
         return repository.save(booking);
     }
 
-    public Room freeRoomSearch(java.sql.Date currentD1, java.sql.Date currentD2, int type) throws ParseException {
+    public Room freeRoomSearch(java.sql.Date fromDate , java.sql.Date toDate, int type){
 
         List<Booking> bookings = list();
         List<Room> rooms = roomService.list();
@@ -65,7 +63,7 @@ public class BookingService implements PojoService<Booking> {
             if (!currentRoom.getType().equals(type)) {continue;}
             for (Booking currentBooking:bookings) {
                 if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {
-                    if (  !((currentD1.after(currentBooking.getDate_of_departure()))||(currentD2.before(currentBooking.getArrival_date())))  ){
+                    if (  !((fromDate .after(currentBooking.getDate_of_departure()))||(toDate.before(currentBooking.getArrival_date())))  ){
                         continue outer;
                     }
                 }

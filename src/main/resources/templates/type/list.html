@@ -20,14 +20,14 @@
                 <th th:text="Наименование"></th>
                 <th th:text="Действия"></th>
             </tr>
-            <tr th:each="typeRoom : ${typeRoomList}">
-                <td th:text="${typeRoom.id}"></td>
-                <td th:text="${typeRoom.name}"></td>
+            <tr th:each="roomType : ${typeRoomList}">
+                <td th:text="${roomType.id}"></td>
+                <td th:text="${roomType.name}"></td>
                 <td>
                     <ul class="list-inline">
-                        <li><a th:href="${'/type/delete/' + typeRoom.id}" th:text="Удалить"></a> </li>
-                        <li><a th:href="${'/type/edit/' + typeRoom.id}" th:text="Редактировать"></a> </li>
-                        <li><a th:href="${'/type/details/' + typeRoom.id}" th:text="Карточка"></a> </li>
+                        <li><a th:href="${'/type/delete/' + roomType.id}" th:text="Удалить"></a> </li>
+                        <li><a th:href="${'/type/edit/' + roomType.id}" th:text="Редактировать"></a> </li>
+                        <li><a th:href="${'/type/details/' + roomType.id}" th:text="Карточка"></a> </li>
                     </ul>
                 </td>
             </tr>
