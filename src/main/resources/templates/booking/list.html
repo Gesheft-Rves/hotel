@@ -3,8 +3,9 @@
 <head lang="en">
 
     <title th:text="Брони"></title>
-
     <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+    <script th:src="@{/js/functions.js}"></script>
+
 </head>
 <body>
 <div class="container">
@@ -14,31 +15,48 @@
 <a th:href="${'/booking/new'}">Создать новую бронь</a>
 <div th:if="${not #lists.isEmpty(bookings)}">
     <h2>Список броней</h2>
-    <table class="table table-striped">
+    <table class="table table-bordered table-hover" id="bookingsTable">
         <tr>
-            <th th:text="ID"></th>
-            <th>Дата бронирования</th>
-            <th th:text="Номер"></th>
-            <th>Дата заезда</th>
-            <th>Дата выезда</th>
+            <th>
+                ID
+            </th>
+
+            <th>
+                Дата бронирования<br/>
+                <input type="date" class="form-control" id="dateFromFilter" onchange="filter()"/>
+                <input type="date" class="form-control" id="dateToFilter" onchange="filter()"/>
+            </th>
+
+            <th>
+                Номер<br/>
+                <input type="number" placeholder="Введите номер" class="form-control" id="roomFilter" onchange="filter()"/>
+            </th>
+
+            <th>
+                Дата заезда<br/>
+                <input type="date" class="form-control" id="dateArrivalFilter" onchange="filter()"/>
+                <input type="date" class="form-control" id="dateArrivalFilter2" onchange="filter()"/>
+            </th>
+
+            <th>
+                Дата выезда<br/>
+                <input type="date" class="form-control" id="dateDepartureFilter" onchange="filter()"/>
+                <input type="date" class="form-control" id="dateDepartureFilter2" onchange="filter()"/>
+            </th>
+
+            <th>
+                Действия<br/>
+                <input type="hidden" class="form-control" id="adminFilter"/>
+            </th>
         </tr>
-        <tr th:each="booking : ${bookings}">
-            <td th:text="${booking.id}"></td>
-            <td th:text="${booking.date_buking}"></td>
-            <td th:with="room=${booking.room}" th:text="${room.no}"></td>
-            <!--<td th:text="${booking.room_id}"></td>-->
-            <td th:text="${booking.arrival_date}"></td>
-            <td th:text="${booking.date_of_departure}"></td>
-            <td>
-                <ul class="list-inline">
-                    <li><a th:href="${'/booking/delete/' + booking.id}" th:text="Удалить"></a> </li>
-                    <li><a th:href="${'/booking/edit/' + booking.id}" th:text="Изменить"></a> </li>
-                    <li><a th:href="${'/booking/details/' + booking.id}" th:text="Посмотреть"></a> </li>
-                </ul>
-            </td>
+        <tr>
+            <script th:inline="javascript">
+                $( document ).ready(function() {
+                    filter();
+                });
+            </script>
         </tr>
     </table>
 </div>
-
 </body>
 </html>
