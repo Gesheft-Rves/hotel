@@ -2,6 +2,7 @@ package com.rves.controller;
 
 import com.rves.pojo.Room;
 import com.rves.services.RoomsService;
+import com.rves.services.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class RoomsController {
 
     private RoomsService service;
+    private RoomTypeService roomTypeService;
+
+    @Autowired
+    public void setRoomTypeService(RoomTypeService roomTypeService) {
+        this.roomTypeService = roomTypeService;
+    }
 
     @Autowired
     public void setService(RoomsService service) {
@@ -24,8 +28,7 @@ public class RoomsController {
 
     @RequestMapping("/rooms/list")
     public String list(Model model){
-        List<Room> rooms = service.list();
-        model.addAttribute("rooms", rooms);
+        model.addAttribute("rooms", service.list());
         return "/rooms/list";
     }
 
@@ -37,16 +40,14 @@ public class RoomsController {
 
     @RequestMapping("/rooms/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
-        Room room = service.getById(id);
-        List<Room> rooms = service.list();
-        model.addAttribute("rooms", rooms);
-        model.addAttribute("room", room);
+        model.addAttribute("rooms", service.list());
+        model.addAttribute("room", service.getById(id));
         return "/rooms/form";
     }
 
     @RequestMapping("/rooms/new")
     public String newGroup(Model model){
-        ArrayList<Room> rooms = (ArrayList<Room>) service.list();
+        model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("room", new Room());
         return "/rooms/form";
     }

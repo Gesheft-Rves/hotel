@@ -1,7 +1,5 @@
 package com.rves.pojo;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
