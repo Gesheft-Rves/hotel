@@ -2,12 +2,17 @@ package com.rves.services;
 
 
 import com.rves.Dto.BookingDto;
+import com.rves.Dto.CurrentFilterBooking;
 import com.rves.pojo.Booking;
 import com.rves.pojo.Room;
 import com.rves.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService implements PojoService<Booking> {
@@ -71,6 +76,76 @@ public class BookingService implements PojoService<Booking> {
             return currentRoom;
         }
         return null;
+    }
+
+    public List<Booking> findAllMatchingCriteria(CurrentFilterBooking filterBooking){
+
+        filterBooking.parse();
+        List<Booking> result = new ArrayList<>();
+
+        ///* получаю все записи
+        result.addAll(list());
+        if (filterBooking.filterIsEmpty())
+            return result;
+
+        Date dateFrom = filterBooking.getDateFromFilter();
+        Date dateTo = filterBooking.getDateToFilter();
+        Integer roomFilter = filterBooking.getRoomFilter();
+        Date dateFromArrivalFilter = filterBooking.getDateFromArrivalFilter();
+        Date dateFromDepartureFilter = filterBooking.getDateFromDepartureFilter();
+        Date dateToArrivalFilter = filterBooking.getDateToArrivalFilter();
+        Date dateToDepartureFilter = filterBooking.getDateToDepartureFilter();
+
+
+        // Filter by FromDate
+        if (dateFrom != null){
+            result = result.stream()
+                    .filter(e -> e.getDate_buking().compareTo(dateFrom) >= 0)
+                    .collect(Collectors.toList());
+        }
+
+        /* Filter by ToDate*/
+        if (dateTo != null){
+            result = result.stream()
+                    .filter(e -> e.getDate_buking().compareTo(dateTo) <= 0)
+                    .collect(Collectors.toList());
+        }
+
+        /* Filter by Room*/
+        if (roomFilter != null){
+            result = result.stream()
+                    .filter(e -> e.getRoom().getNo().equals(roomFilter))
+                    .collect(Collectors.toList());
+        }
+
+        /* Filter by dateArrival*/
+        if (dateFromArrivalFilter != null){
+            result = result.stream()
+                    .filter(e -> e.getArrival_date().compareTo(dateFromArrivalFilter) >= 0)
+                    .collect(Collectors.toList());
+        }
+
+        if (dateToArrivalFilter != null){
+            result = result.stream()
+                    .filter(e -> e.getArrival_date().compareTo(dateToArrivalFilter) <= 0)
+                    .collect(Collectors.toList());
+        }
+
+        /* Filter by dateDeparture*/
+        if (dateFromDepartureFilter != null){
+            result = result.stream()
+                    .filter(e -> e.getDate_of_departure().compareTo(dateFromDepartureFilter) >= 0)
+                    .collect(Collectors.toList());
+        }
+
+        if (dateToDepartureFilter != null){
+            result = result.stream()
+                    .filter(e -> e.getDate_of_departure().compareTo(dateToDepartureFilter) <= 0)
+                    .collect(Collectors.toList());
+        }
+
+        return result;
+
     }
 
 }
