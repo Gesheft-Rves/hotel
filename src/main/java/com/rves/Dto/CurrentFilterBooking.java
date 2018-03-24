@@ -18,18 +18,18 @@ public class CurrentFilterBooking {
     private Date dateFromFilter;
     private Date dateToFilter;
     private Integer roomFilter;
-    private Date dateArrivalFilter;
-    private Date dateDepartureFilter;
-    private Date dateArrivalFilter2;
-    private Date dateDepartureFilter2;
+    private Date dateFromArrivalFilter;
+    private Date dateFromDepartureFilter;
+    private Date dateToArrivalFilter;
+    private Date dateToDepartureFilter;
 
     private String dateFromFilterStr;
     private String dateToFilterStr;
     private String roomFilterStr;
-    private String dateArrivalFilterStr;
-    private String dateDepartureFilterStr;
-    private String dateArrivalFilterStr2;
-    private String dateDepartureFilterStr2;
+    private String dateFromArrivalFilterStr;
+    private String dateFromDepartureFilterStr;
+    private String dateToArrivalFilterStr;
+    private String dateToDepartureFilterStr;
 
     private BookingService bookingService;
     private RoomsService roomsService;
@@ -56,21 +56,21 @@ public class CurrentFilterBooking {
                 ? null
                 : Integer.parseInt(roomFilterStr);
 
-        dateArrivalFilter = "".equals(dateArrivalFilterStr)
+        dateFromArrivalFilter = "".equals(dateFromArrivalFilterStr)
                 ? null
-                : parseDate(dateArrivalFilterStr);
+                : parseDate(dateFromArrivalFilterStr);
 
-        dateDepartureFilter = "".equals(dateDepartureFilterStr)
+        dateFromDepartureFilter = "".equals(dateFromDepartureFilterStr)
                 ? null
-                : parseDate(dateDepartureFilterStr);
+                : parseDate(dateFromDepartureFilterStr);
 
-        dateArrivalFilter2 = "".equals(dateArrivalFilterStr2)
+        dateToArrivalFilter = "".equals(dateToArrivalFilterStr)
                 ? null
-                : parseDate(dateArrivalFilterStr2);
+                : parseDate(dateToArrivalFilterStr);
 
-        dateDepartureFilter2 = "".equals(dateDepartureFilterStr2)
+        dateToDepartureFilter = "".equals(dateToDepartureFilterStr)
                 ? null
-                : parseDate(dateDepartureFilterStr2);
+                : parseDate(dateToDepartureFilterStr);
 
     }
 
@@ -78,10 +78,10 @@ public class CurrentFilterBooking {
         return dateFromFilter == null
                 && dateToFilter   == null
                 && roomFilter   == null
-                && dateArrivalFilter   == null
-                && dateDepartureFilter   == null
-                && dateArrivalFilter2   == null
-                && dateDepartureFilter2   == null;
+                && dateFromArrivalFilter == null
+                && dateFromDepartureFilter == null
+                && dateToArrivalFilter == null
+                && dateToDepartureFilter == null;
     }
 
     private Date parseDate(String strDate){

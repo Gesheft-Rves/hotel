@@ -91,10 +91,10 @@ public class BookingService implements PojoService<Booking> {
         Date dateFrom = filterBooking.getDateFromFilter();
         Date dateTo = filterBooking.getDateToFilter();
         Integer roomFilter = filterBooking.getRoomFilter();
-        Date dateArrivalFilter = filterBooking.getDateArrivalFilter();
-        Date dateDepartureFilter = filterBooking.getDateDepartureFilter();
-        Date dateArrivalFilter2 = filterBooking.getDateArrivalFilter2();
-        Date dateDepartureFilter2 = filterBooking.getDateDepartureFilter2();
+        Date dateFromArrivalFilter = filterBooking.getDateFromArrivalFilter();
+        Date dateFromDepartureFilter = filterBooking.getDateFromDepartureFilter();
+        Date dateToArrivalFilter = filterBooking.getDateToArrivalFilter();
+        Date dateToDepartureFilter = filterBooking.getDateToDepartureFilter();
 
 
         // Filter by FromDate
@@ -119,28 +119,28 @@ public class BookingService implements PojoService<Booking> {
         }
 
         /* Filter by dateArrival*/
-        if (dateArrivalFilter != null){
+        if (dateFromArrivalFilter != null){
             result = result.stream()
-                    .filter(e -> e.getArrival_date().compareTo(dateArrivalFilter) >= 0)
+                    .filter(e -> e.getArrival_date().compareTo(dateFromArrivalFilter) >= 0)
                     .collect(Collectors.toList());
         }
 
-        if (dateArrivalFilter2 != null){
+        if (dateToArrivalFilter != null){
             result = result.stream()
-                    .filter(e -> e.getArrival_date().compareTo(dateArrivalFilter2) <= 0)
+                    .filter(e -> e.getArrival_date().compareTo(dateToArrivalFilter) <= 0)
                     .collect(Collectors.toList());
         }
 
         /* Filter by dateDeparture*/
-        if (dateDepartureFilter != null){
+        if (dateFromDepartureFilter != null){
             result = result.stream()
-                    .filter(e -> e.getDate_of_departure().compareTo(dateDepartureFilter) >= 0)
+                    .filter(e -> e.getDate_of_departure().compareTo(dateFromDepartureFilter) >= 0)
                     .collect(Collectors.toList());
         }
 
-        if (dateDepartureFilter2 != null){
+        if (dateToDepartureFilter != null){
             result = result.stream()
-                    .filter(e -> e.getDate_of_departure().compareTo(dateDepartureFilter2) <= 0)
+                    .filter(e -> e.getDate_of_departure().compareTo(dateToDepartureFilter) <= 0)
                     .collect(Collectors.toList());
         }
 

@@ -4,10 +4,10 @@ function filter() {
     search["dateFromFilterStr"]        = $("#dateFromFilter").val();
     search["dateToFilterStr"]          = $("#dateToFilter").val();
     search["roomFilterStr"]            = $("#roomFilter").val();
-    search["dateArrivalFilterStr"]     = $("#dateArrivalFilter").val();
-    search["dateDepartureFilterStr"]   = $("#dateDepartureFilter").val();
-    search["dateArrivalFilterStr2"]     = $("#dateArrivalFilter2").val();
-    search["dateDepartureFilterStr2"]   = $("#dateDepartureFilter2").val();
+    search["dateFromArrivalFilterStr"]     = $("#dateFromArrivalFilter").val();
+    search["dateFromDepartureFilterStr"]   = $("#dateFromDepartureFilter").val();
+    search["dateToArrivalFilterStr"]     = $("#dateToArrivalFilter").val();
+    search["dateToDepartureFilterStr"]   = $("#dateToDepartureFilter").val();
 
 
 
