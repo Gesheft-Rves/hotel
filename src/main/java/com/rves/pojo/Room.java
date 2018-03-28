@@ -18,6 +18,11 @@ public class Room {
     public Room() {
     }
 
+    public Room(Integer no, Integer type) {
+        this.no = no;
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
