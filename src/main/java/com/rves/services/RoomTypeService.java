@@ -16,7 +16,6 @@ public class RoomTypeService implements PojoService<RoomType> {
         this.repository = repository;
     }
 
-
     @Override
     public List<RoomType> list() {
         return repository.findAll();
