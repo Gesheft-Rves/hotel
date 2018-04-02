@@ -15,6 +15,10 @@ public class RoomType {
     public RoomType() {
     }
 
+    public RoomType(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "RoomType{" +

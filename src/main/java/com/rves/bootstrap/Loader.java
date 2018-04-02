@@ -1,20 +1,21 @@
 package com.rves.bootstrap;
 
 
-import com.rves.pojo.Role;
-import com.rves.pojo.User;
+import com.rves.pojo.*;
 import com.rves.repositories.BookingRepository;
 import com.rves.repositories.RoomTypeRepository;
 import com.rves.repositories.RoomsRepository;
 import com.rves.repositories.UserRepository;
+import com.rves.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class Loader implements ApplicationListener<ContextRefreshedEvent> {
@@ -22,8 +23,17 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
     private RoomsRepository roomsRepository;
     private RoomTypeRepository roomTypeRepo;
     private BookingRepository bookingRepository;
+    private BookingService bookingService;
     private UserRepository userRepo;
     private static int userCount;
+    private static int roomCount;
+    private static int roomTypeCount;
+
+
+    @Autowired
+    public void setBookingService(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @Autowired
     public void setUserRepo(UserRepository userRepo) {
@@ -50,6 +60,19 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
         for (int j = 0; j < 3; j++) {
             User user = createUser();
         }
+
+        for (int t = 0; t < 5; t++ ){
+            RoomType roomType = createRoomType();
+        }
+
+        for (int i = 0; i < 10; i++){
+            Room room = createRoom();
+        }
+
+        for (int i = 0; i < 10; i++){
+            Booking booking = createBooking();
+        }
+
     }
 
     private User createUser(){
@@ -66,19 +89,41 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
         return user;
     }
 
-    private static Date getRandDate(){
-        GregorianCalendar gc = new GregorianCalendar();
-        int year = randBetween(2010, 2017);
-        gc.set(gc.YEAR, year);
-
-        int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
-        gc.set(gc.DAY_OF_YEAR, dayOfYear);
-        return new Date(gc.getTimeInMillis());
-
+    private RoomType createRoomType(){
+        roomTypeCount++;
+        RoomType roomType = new RoomType();
+        roomType.setName(roomTypeCount + " room");
+        roomTypeRepo.save(roomType);
+        return roomType;
     }
 
-    private static int randBetween(int start, int end) {
-        return start + (int)Math.round(Math.random() * (end - start));
+    private Room createRoom(){
+        roomCount ++;
+        Room room = new Room();
+        room.setNo(roomCount);
+        room.setType(ThreadLocalRandom.current().nextInt(1, 4 + 1));
+        roomsRepository.save(room);
+        return room;
+    }
+
+    private Booking createBooking(){
+        java.util.Date d = new java.util.Date();
+        long date = d.getTime();
+        int rand = ThreadLocalRandom.current().nextInt(1, 9 + 1);
+
+        Booking booking = new Booking();
+        booking.setDate_buking(new Timestamp(date));
+        // рандом дата
+        booking.setArrival_date(new Date(new java.util.Date().getTime()));
+        //  +24 часа
+        booking.setDate_of_departure(
+               new Date( booking.getArrival_date().getTime() + 1 * 24 * 60 * 60 * 1000));
+
+        // rand - (1-10) гетает комнату с рандомным индексом
+        booking.setRoom(roomsRepository.getOne(rand));
+
+        bookingRepository.save(booking);
+        return booking;
     }
 
 }
