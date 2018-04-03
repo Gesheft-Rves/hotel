@@ -5,6 +5,8 @@
     <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"-->
     <!--th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"-->
     <!--rel="stylesheet" media="screen" />-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
 
@@ -32,6 +34,7 @@
                         <li><a href="#" th:href="@{/booking/list}" th:text="Бронирование"></a></li>
                         <li><a href="#" th:href="@{/cleanRoom/list}" th:text="Уборка"></a></li>
                         <li><a href="#" th:href="@{/type/list}" th:text="Категории"></a></li>
+                        <li><a href="#" th:href="@{/logout}" th:text="Выйти"></a></li>
                     </ul>
                 </div>
             </div>

@@ -23,25 +23,25 @@
 
             <th>
                 Дата бронирования<br/>
-                <input type="date" class="form-control" id="dateFromFilter" onchange="filter()"/>
-                <input type="date" class="form-control" id="dateToFilter" onchange="filter()"/>
+                <input type="date" class="form-control" id="dateFromFilter" onchange="performFilter()"/>
+                <input type="date" class="form-control" id="dateToFilter" onchange="performFilter()"/>
             </th>
 
             <th>
                 Номер<br/>
-                <input type="number" placeholder="Введите номер" class="form-control" id="roomFilter" onchange="filter()"/>
+                <input type="number" placeholder="Введите номер" class="form-control" id="roomFilter" onchange="performFilter()"/>
             </th>
 
             <th>
                 Дата заезда<br/>
-                <input type="date" class="form-control" id="dateFromArrivalFilter" onchange="filter()"/>
-                <input type="date" class="form-control" id="dateToArrivalFilter" onchange="filter()"/>
+                <input type="date" class="form-control" id="dateFromArrivalFilter" onchange="performFilter()"/>
+                <input type="date" class="form-control" id="dateToArrivalFilter" onchange="performFilter()"/>
             </th>
 
             <th>
                 Дата выезда<br/>
-                <input type="date" class="form-control" id="dateFromDepartureFilter" onchange="filter()"/>
-                <input type="date" class="form-control" id="dateToDepartureFilter" onchange="filter()"/>
+                <input type="date" class="form-control" id="dateFromDepartureFilter" onchange="performFilter()"/>
+                <input type="date" class="form-control" id="dateToDepartureFilter" onchange="performFilter()"/>
             </th>
 
             <th>
@@ -52,8 +52,17 @@
         <tr>
             <script th:inline="javascript">
                 $( document ).ready(function() {
-                    filter();
+                    performFilter();
                 });
+
+
+                function performFilter() {
+                    //две строки ниже нужны для секьюрити, тебе пока не надо
+                    var header = $("meta[name='_csrf_header']").attr("content");
+                    var token = $("meta[name='_csrf']").attr("content");
+                    filter(header, token)
+                }
+
             </script>
         </tr>
     </table>
