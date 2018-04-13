@@ -37,6 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .successForwardUrl("/home")
                 .permitAll()
                 .and()
                 .logout()
@@ -46,7 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userService);
+                .userDetailsService(userService)
+                .passwordEncoder(bCryptPasswordEncoder());
+
     }
 
     @Autowired

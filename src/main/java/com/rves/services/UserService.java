@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService, PojoService<User> {
     public User save(User user) {
         return repository.save(user);
     }
+
     public void delete(Integer id) {
         repository.delete(id);
     }
@@ -69,5 +70,13 @@ public class UserService implements UserDetailsService, PojoService<User> {
         user.setEnabled(true);
         repository.save(user);
         return user;
+    }
+
+    public boolean userExists(@NotNull  String username) {
+        for (User user : list()){
+            if (user.getUsername().equals(username))
+                return true;
+        }
+        return false;
     }
 }

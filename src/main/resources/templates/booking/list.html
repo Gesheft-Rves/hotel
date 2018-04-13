@@ -45,8 +45,19 @@
             </th>
 
             <th>
+                Админ<br/>
+                <select id="adminFilter" class="form-control"  onchange="performFilter()">
+                    <option value="" selected="selected"></option>
+                    <option th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.username}">
+                    </option>
+                </select>
+            </th>
+
+            <th>
                 Действия<br/>
-                <input type="hidden" class="form-control" id="adminFilter"/>
+
             </th>
         </tr>
         <tr>

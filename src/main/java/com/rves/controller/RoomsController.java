@@ -42,6 +42,7 @@ public class RoomsController {
     public String edit(@PathVariable  Integer id, Model model){
         model.addAttribute("rooms", service.list());
         model.addAttribute("room", service.getById(id));
+        model.addAttribute("roomTypes", roomTypeService.list());
         return "/rooms/form";
     }
 
@@ -61,6 +62,7 @@ public class RoomsController {
     @RequestMapping("/rooms/details/{id}")
     public String details(@PathVariable Integer id, Model model){
         model.addAttribute("room", service.getById(id));
+        model.addAttribute("roomTypes", roomTypeService.list());
         return "/rooms/details";
 
     }

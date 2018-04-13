@@ -8,6 +8,7 @@ function filter(header, token) {
     search["dateFromDepartureFilterStr"]   = $("#dateFromDepartureFilter").val();
     search["dateToArrivalFilterStr"]     = $("#dateToArrivalFilter").val();
     search["dateToDepartureFilterStr"]   = $("#dateToDepartureFilter").val();
+    search["adminFilterStr"]             = $("#adminFilter").val();
 
 
 
@@ -53,13 +54,15 @@ function filter(header, token) {
                 var cellRoom            = row.insertCell(2);
                 var cellArrivalDate     = row.insertCell(3);
                 var cellDateDeparture   = row.insertCell(4);
-                var cellActions         = row.insertCell(5);
+                var cellAdmins          = row.insertCell(5);
+                var cellActions         = row.insertCell(6);
 
                 cellbookingId.innerHTML     = bookings[i].id;
                 cellDate.innerHTML          = new Date(bookings[i].date_buking).toLocaleString("ru", options);
                 cellRoom.innerHTML          = bookings[i].room.no;
                 cellArrivalDate.innerHTML   = bookings[i].arrival_date;
                 cellDateDeparture.innerHTML = bookings[i].date_of_departure;
+                cellAdmins.innerHTML        = bookings[i].user.username;
 
                 var id = bookings[i].id
                 urlInCell(cellActions, "edit", id);

@@ -19,6 +19,12 @@ public class BookingService implements PojoService<Booking> {
 
     private BookingRepository repository;
     private RoomsService roomService;
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setRoomService(RoomsService roomService) {
@@ -56,6 +62,7 @@ public class BookingService implements PojoService<Booking> {
         booking.setRoom(bookingDto.getRoom());
         booking.setArrival_date(bookingDto.getArrival_date());
         booking.setDate_of_departure(bookingDto.getDate_of_departure());
+        booking.setUser(userService.getCurrentLoggedInUser());
         return repository.save(booking);
     }
 
@@ -95,6 +102,7 @@ public class BookingService implements PojoService<Booking> {
         Date dateFromDepartureFilter = filterBooking.getDateFromDepartureFilter();
         Date dateToArrivalFilter = filterBooking.getDateToArrivalFilter();
         Date dateToDepartureFilter = filterBooking.getDateToDepartureFilter();
+        Integer adminFilter = filterBooking.getAdminFilter();
 
 
         // Filter by FromDate
@@ -141,6 +149,12 @@ public class BookingService implements PojoService<Booking> {
         if (dateToDepartureFilter != null){
             result = result.stream()
                     .filter(e -> e.getDate_of_departure().compareTo(dateToDepartureFilter) <= 0)
+                    .collect(Collectors.toList());
+        }
+
+        if (adminFilter != null){
+            result = result.stream()
+                    .filter(e -> e.getUser().getId().equals(adminFilter))
                     .collect(Collectors.toList());
         }
 

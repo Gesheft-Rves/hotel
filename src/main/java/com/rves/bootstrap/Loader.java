@@ -57,9 +57,7 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        for (int j = 0; j < 3; j++) {
-            User user = createUser();
-        }
+
 
         for (int t = 0; t < 5; t++ ){
             RoomType roomType = createRoomType();
@@ -69,9 +67,16 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
             Room room = createRoom();
         }
 
-        for (int i = 0; i < 10; i++){
-            Booking booking = createBooking();
+        for (int j = 0; j < 5; j++) {
+            User user = createUser();
+            for (int i = 0; i < 5; i++) {
+                createBooking(user);
+            }
         }
+
+//        for (int i = 0; i < 10; i++){
+//            Booking booking = createBooking();
+//        }
 
     }
 
@@ -106,7 +111,7 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
         return room;
     }
 
-    private Booking createBooking(){
+    private Booking createBooking(User user){
         java.util.Date d = new java.util.Date();
         long date = d.getTime();
         int rand = ThreadLocalRandom.current().nextInt(1, 9 + 1);
@@ -121,6 +126,8 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
 
         // rand - (1-10) гетает комнату с рандомным индексом
         booking.setRoom(roomsRepository.getOne(rand));
+
+        booking.setUser(user);
 
         bookingRepository.save(booking);
         return booking;

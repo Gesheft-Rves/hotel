@@ -1,6 +1,7 @@
 package com.rves.pojo;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -10,23 +11,13 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Version
-    private Integer version;
-
-    @Column(name = "authorities")
-    //@Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    private List<Role> authorities;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "username")
-    private String username;
     @Column(name = "accountNonExpired")
     private boolean accountNonExpired;
     @Column(name = "accountNonLocked")
@@ -35,8 +26,19 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     @Column(name = "enabled")
     private boolean enabled;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "username")
+    private String username;
+    @Version
+    private Integer version;
+    @Column(name = "authorities")
+//    //@Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    private List<Role> authorities;
 
     public void setPassword(String password) {
+//        this.password = password;
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
@@ -67,6 +69,7 @@ public class User implements UserDetails {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
 
     @Override
     public String toString() {

@@ -8,6 +8,7 @@ import com.rves.pojo.Room;
 import com.rves.services.BookingService;
 import com.rves.services.RoomTypeService;
 import com.rves.services.RoomsService;
+import com.rves.services.UserService;
 import com.rves.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,12 @@ public class BookingController {
     private RoomsService roomsService;
     private BookingValidator bookingValidator;
     private RoomTypeService roomTypeService;
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setRoomTypeService(RoomTypeService roomTypeService) {
@@ -52,6 +59,7 @@ public class BookingController {
     @RequestMapping("/booking/list")
     public String list(Model model){
         model.addAttribute("bookings", bookingService.list());
+        model.addAttribute("users",userService.list());
         return "/booking/list";
     }
 
@@ -63,6 +71,7 @@ public class BookingController {
 
     @RequestMapping("/booking/edit/{id}")
     public String edit(@PathVariable  Integer id, Model model){
+        model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("roomslist", roomsService.list());
         model.addAttribute("booking", bookingService.getById(id));
         return "/booking/form";
@@ -85,6 +94,7 @@ public class BookingController {
         );
 
         bookingDto.setRoom(freeRoom);
+        bookingDto.setUser(userService.getCurrentLoggedInUser());
 
         bookingValidator.validate(bookingDto, bindingResult);
 

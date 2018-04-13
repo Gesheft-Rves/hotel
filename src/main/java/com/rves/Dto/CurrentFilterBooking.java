@@ -4,6 +4,7 @@ import com.rves.bootstrap.ApplicationContextHolder;
 import com.rves.pojo.Booking;
 import com.rves.services.BookingService;
 import com.rves.services.RoomsService;
+import com.rves.services.UserService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,8 @@ public class CurrentFilterBooking {
     private Date dateFromDepartureFilter;
     private Date dateToArrivalFilter;
     private Date dateToDepartureFilter;
+    private Integer adminFilter;
+
 
     private String dateFromFilterStr;
     private String dateToFilterStr;
@@ -30,9 +33,11 @@ public class CurrentFilterBooking {
     private String dateFromDepartureFilterStr;
     private String dateToArrivalFilterStr;
     private String dateToDepartureFilterStr;
+    private String adminFilterStr;
 
     private BookingService bookingService;
     private RoomsService roomsService;
+    private UserService userService;
 
     public CurrentFilterBooking() {
     }
@@ -44,6 +49,10 @@ public class CurrentFilterBooking {
         if (roomsService == null) {
             roomsService = ApplicationContextHolder.getContext().getBean(RoomsService.class);
         }
+        if(userService == null) {
+            userService = ApplicationContextHolder.getContext().getBean(UserService.class);
+        }
+
         dateFromFilter = "".equals(dateFromFilterStr)
                 ? null
                 : parseDate(dateFromFilterStr);
@@ -72,6 +81,10 @@ public class CurrentFilterBooking {
                 ? null
                 : parseDate(dateToDepartureFilterStr);
 
+        adminFilter = "".equals(adminFilterStr)
+                ? null
+                : Integer.parseInt(adminFilterStr);
+
     }
 
     public boolean filterIsEmpty(){
@@ -81,7 +94,8 @@ public class CurrentFilterBooking {
                 && dateFromArrivalFilter == null
                 && dateFromDepartureFilter == null
                 && dateToArrivalFilter == null
-                && dateToDepartureFilter == null;
+                && dateToDepartureFilter == null
+                && adminFilter == null;
     }
 
     private Date parseDate(String strDate){
