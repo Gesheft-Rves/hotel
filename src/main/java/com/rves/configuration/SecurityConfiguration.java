@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -18,6 +19,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
+
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder(){
@@ -32,18 +36,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/resources/**", "/register", "/login/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .successForwardUrl("/home")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll();
+            .authorizeRequests()
+            .antMatchers("/resources/**", "/login/**").permitAll()
+            .antMatchers("/booking/**").hasAnyRole("ADMIN","USER")
+            .antMatchers("/rooms/**").hasAnyRole("ADMIN","USER")
+            .antMatchers("/type/**").hasAnyRole("ADMIN","USER")
+            .antMatchers("/users/**").hasRole("ADMIN")
+            .antMatchers("/cleanRoom/**").hasAnyRole("ADMIN","CLEANER")
+            .anyRequest().authenticated()
+        .and()
+        .formLogin()
+            .loginPage("/login")
+            .successForwardUrl("/home")
+            .permitAll()
+            .and()
+        .logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .permitAll()
+        .and()
+        .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

@@ -32,13 +32,12 @@ public class User implements UserDetails {
     private String username;
     @Version
     private Integer version;
+
     @Column(name = "authorities")
-//    //@Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     private List<Role> authorities;
 
     public void setPassword(String password) {
-//        this.password = password;
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
