@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+
+    <title>Hotel Russia</title>
+    <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div class ="jumbotron">
+        <h1 th:text="${message}" />
+    </div>
+    <div class="col-sm-12">
+        <div th:if="${not #lists.isEmpty(bookings)}">
+            <h2> Список номеров, которые требуют продления </h2>
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="ID"></th>
+                    <th>Дата бронирования</th>
+                    <th th:text="Номер"></th>
+                    <th>Дата заезда</th>
+                    <th>Дата выезда</th>
+                    <th>Администратор</th>
+                </tr>
+                <tr th:each="booking : ${bookings}">
+                    <td th:text="${booking.id}"></td>
+                    <td th:text="${booking.date_buking}"></td>
+                    <td th:with="room=${booking.room}" th:text="${room.no}"></td>
+                    <td th:text="${booking.arrival_date}"></td>
+                    <td th:text="${booking.date_of_departure}"></td>
+                    <td th:with="user=${booking.user}" th:text="${user.username}"></td>
+                    <td>
+                        <ul class="list-inline">
+                            <li><a th:href="${'/booking/edit/' + booking.id}" th:text="Редактировать"></a> </li>
+                            <li><a th:href="${'/booking/details/' + booking.id}" th:text="Посмотреть"></a> </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
