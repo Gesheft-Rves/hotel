@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -103,10 +104,14 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     private Room createRoom(){
+        int randomType = ThreadLocalRandom.current().nextInt(roomTypeRepo.findAll().size());
+        List<RoomType> roomTypeList = roomTypeRepo.findAll();
+
         roomCount ++;
         Room room = new Room();
         room.setNo(roomCount);
-        room.setType(ThreadLocalRandom.current().nextInt(1, 4 + 1));
+        room.setType(roomTypeList.get(randomType));
+        room.setCleaning_required(true);
         roomsRepository.save(room);
         return room;
     }
