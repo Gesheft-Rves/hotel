@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,28 @@ public class BookingService implements PojoService<Booking> {
         repository.delete(id);
     }
 
+    //booking time is coming to an end
+    public List<Booking> bookingEndTimeList (){
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar departureCalendar = Calendar.getInstance();
+
+        currentCalendar.setTime(new java.util.Date());
+        long today = currentCalendar.get(Calendar.DAY_OF_MONTH);
+
+        List<Booking> bookings = list();
+        List<Booking> arrayInvalidBooking = new ArrayList<>();
+
+        for (Booking booking : bookings) {
+            departureCalendar.setTime(booking.getDate_of_departure());
+            long bookingEndDay = departureCalendar.get(Calendar.DAY_OF_MONTH);
+
+            if (today == bookingEndDay){
+                arrayInvalidBooking.add(booking);
+            }
+        }
+        return arrayInvalidBooking;
+    }
+
     public Booking saveFromDto (BookingDto bookingDto) {
         Booking booking = new Booking();
         booking.setDate_buking(bookingDto.getDate_buking());
@@ -63,20 +86,30 @@ public class BookingService implements PojoService<Booking> {
         booking.setArrival_date(bookingDto.getArrival_date());
         booking.setDate_of_departure(bookingDto.getDate_of_departure());
         booking.setUser(userService.getCurrentLoggedInUser());
+        booking.setCanceled(false);
         return repository.save(booking);
     }
 
+    /**
+     * @param fromDate
+     * @param toDate
+     * @param type
+     * @return freeRoom
+     */
+    //TODO не возвращает комнату
     public Room freeRoomSearch(java.sql.Date fromDate , java.sql.Date toDate, int type){
 
         List<Booking> bookings = list();
         List<Room> rooms = roomService.list();
 
         outer:  for (Room currentRoom:rooms) {
-            if (!currentRoom.getType().equals(type)) {continue;}
+            if (!currentRoom.getType().getId().equals(type)&& currentRoom.isCleaning_required()) {continue;}
             for (Booking currentBooking:bookings) {
-                if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {
-                    if (  !((fromDate .after(currentBooking.getDate_of_departure()))||(toDate.before(currentBooking.getArrival_date())))  ){
-                        continue outer;
+                if (!currentBooking.isCanceled()){
+                    if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {
+                        if (  !((fromDate .after(currentBooking.getDate_of_departure()))||(toDate.before(currentBooking.getArrival_date())))  ){
+                            continue outer;
+                        }
                     }
                 }
             }
