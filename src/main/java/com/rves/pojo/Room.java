@@ -12,15 +12,17 @@ public class Room {
     @Column(name = "no")
     private Integer no;
 
-    @Column(name = "type")
-    private Integer type;
+    @OneToOne
+    @JoinColumn
+    private RoomType type;
+
+    private boolean cleaningRequired;
 
     public Room() {
     }
 
-    public Room(Integer no, Integer type) {
+    public Room(Integer no) {
         this.no = no;
-        this.type = type;
     }
 
     @Override
@@ -30,6 +32,14 @@ public class Room {
                 ", no=" + no +
                 ", type=" + type +
                 '}';
+    }
+
+    public boolean isCleaning_required() {
+        return cleaningRequired;
+    }
+
+    public void setCleaning_required(boolean cleaningRequired) {
+        this.cleaningRequired = cleaningRequired;
     }
 
     public Integer getId() {
@@ -48,11 +58,12 @@ public class Room {
         this.no = no;
     }
 
-    public Integer getType() {
+    public RoomType getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(RoomType type) {
         this.type = type;
     }
+
 }

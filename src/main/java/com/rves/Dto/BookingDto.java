@@ -46,6 +46,8 @@ public class BookingDto {
 
     private User user;
 
+    private boolean canceled;
+
     public Timestamp getDate_buking() {
         java.util.Date date = new java.util.Date();
         return new Timestamp(date.getTime());
