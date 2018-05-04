@@ -37,6 +37,9 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     private List<Role> authorities;
 
+    public User() {
+    }
+
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
@@ -48,8 +51,4 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 '}';
     }
-
-    public User() {
-    }
-
 }

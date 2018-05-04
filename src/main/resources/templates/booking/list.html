@@ -68,7 +68,6 @@
 
 
                 function performFilter() {
-                    //две строки ниже нужны для секьюрити, тебе пока не надо
                     var header = $("meta[name='_csrf_header']").attr("content");
                     var token = $("meta[name='_csrf']").attr("content");
                     filter(header, token)
