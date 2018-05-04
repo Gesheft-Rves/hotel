@@ -41,35 +41,6 @@ public class User implements UserDetails {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setAuthorities(List<Role> authorities) {
-        this.authorities = authorities;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-
     @Override
     public String toString() {
         return "User{" +
