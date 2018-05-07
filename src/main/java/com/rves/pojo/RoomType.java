@@ -1,7 +1,12 @@
 package com.rves.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 public class RoomType {
     @Id
@@ -15,27 +20,15 @@ public class RoomType {
     public RoomType() {
     }
 
+    public RoomType(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "RoomType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en" th:fragment="head">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"-->
     <!--th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"-->
@@ -20,27 +20,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 
+
+    <div th:replace="fragments/header :: header-css"/>
+
 </head>
 <body>
 
+<div th:replace="fragments/header :: header"/>
+
 <div class="container">
-    <div th:fragment="header">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" th:href="@{/}" th:text="Домой"></a>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" th:href="@{/rooms/list}" th:text="Номера"></a></li>
-                        <li><a href="#" th:href="@{/booking/list}" th:text="Бронирование"></a></li>
-                        <li><a href="#" th:href="@{/cleanRoom/list}" th:text="Уборка"></a></li>
-                        <li><a href="#" th:href="@{/type/list}" th:text="Категории"></a></li>
-                        <li><a href="#" th:href="@{/users/list}" th:text="Пользователи"></a></li>
-                        <li><a href="#" th:href="@{/logout}" th:text="Выйти"></a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+    <div class="starter-template">
+        <h1>403 - Access is denied</h1>
+        <div th:inline="text">Здравствуй '[[${#httpServletRequest.remoteUser}]]',
+            у вас нет разрешения на доступ к этой странице.</div>
     </div>
+
 </div>
+<!-- /.container -->
 </body>
 </html>

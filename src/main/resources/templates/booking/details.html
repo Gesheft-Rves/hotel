@@ -34,6 +34,11 @@
                     <p class="form-control-static" th:text="${booking.date_of_departure}">Дата выезда гостя</p>
                 </div>
 
+                <label class="col-sm-3 control-label">Создано Администратором</label>
+                <div class="col-sm-9">
+                    <p class="form-control-static" th:text="${booking.user.username}"></p>
+                </div>
+
             </div>
         </form>
     </div>

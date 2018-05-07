@@ -1,10 +1,15 @@
 package com.rves.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
+@Getter
+@Setter
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +30,10 @@ public class Booking {
     @Column(name = "date_of_departure")
     private Date date_of_departure;
 
+    @OneToOne
+    @JoinColumn
+    private User user;
+
     public Booking() {
     }
 
@@ -33,49 +42,10 @@ public class Booking {
         return "Booking{" +
                 "id=" + id +
                 ", date_buking=" + date_buking +
-                ", rooms=" + room +
+                ", room=" + room +
                 ", arrival_date=" + arrival_date +
                 ", date_of_departure=" + date_of_departure +
+                ", User='" + user + '\'' +
                 '}';
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Timestamp getDate_buking() {
-        return date_buking;
-    }
-
-    public void setDate_buking(Timestamp date_buking) {
-        this.date_buking = date_buking;
-    }
-
-    public Date getArrival_date() {
-        return arrival_date;
-    }
-
-    public void setArrival_date(Date arrival_date) {
-        this.arrival_date = arrival_date;
-    }
-
-    public Date getDate_of_departure() {
-        return date_of_departure;
-    }
-
-    public void setDate_of_departure(Date date_of_departure) {
-        this.date_of_departure = date_of_departure;
     }
 }
