@@ -17,15 +17,14 @@ public class Room {
     @Column(name = "no")
     private Integer no;
 
-    @Column(name = "type")
-    private Integer type;
+    @OneToOne
+    @JoinColumn
+    private RoomType type;
+
+    @Column
+    private boolean cleaningRequired;
 
     public Room() {
-    }
-
-    public Room(Integer no, Integer type) {
-        this.no = no;
-        this.type = type;
     }
 
     @Override

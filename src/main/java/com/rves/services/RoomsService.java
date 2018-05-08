@@ -45,7 +45,7 @@ public class RoomsService implements PojoService<Room> {
         List<Room> dirtyRooms = new ArrayList<>();
 
         for (Room room : rooms) {
-            if (room.isCleaning_required() == true){
+            if (room.isCleaningRequired()){
                 dirtyRooms.add(room);
             }
         }

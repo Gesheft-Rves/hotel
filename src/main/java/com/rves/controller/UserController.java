@@ -37,12 +37,6 @@ public class UserController {
         return "/users/form";
     }
 
-    @RequestMapping("/users/new")
-    public String newUser(Model model){
-        model.addAttribute("user", new User());
-        return "/users/form";
-    }
-
     @RequestMapping(value = "/users/save", method = RequestMethod.POST)
     public String save(User user){
         service.save(user);

@@ -106,12 +106,12 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
     private Room createRoom(){
         int randomType = ThreadLocalRandom.current().nextInt(roomTypeRepo.findAll().size());
         List<RoomType> roomTypeList = roomTypeRepo.findAll();
-
+        RoomType value = roomTypeList.get(randomType);
         roomCount ++;
         Room room = new Room();
         room.setNo(roomCount);
-        room.setType(roomTypeList.get(randomType));
-        room.setCleaning_required(true);
+        room.setType(value);
+        room.setCleaningRequired(true);
         roomsRepository.save(room);
         return room;
     }

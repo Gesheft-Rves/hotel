@@ -62,17 +62,16 @@ public class RoomsController {
     @RequestMapping("/rooms/details/{id}")
     public String details(@PathVariable Integer id, Model model){
         model.addAttribute("room", service.getById(id));
-        //model.addAttribute("roomTypes", roomTypeService.list());
         return "/rooms/details";
     }
 
     @RequestMapping("/rooms/reverse_status/{id}")
     public String reverseStatusRoom(@PathVariable Integer id, Model model){
         Room room = service.getById(id);
-        if (room.isCleaning_required()== false) {
-            room.setCleaning_required(true);
-        } else if (room.isCleaning_required() == true){
-            room.setCleaning_required(false);
+        if (!room.isCleaningRequired()) {
+            room.setCleaningRequired(true);
+        } else if (room.isCleaningRequired()){
+            room.setCleaningRequired(false);
         }
         service.save(room);
         model.addAttribute("room", room);

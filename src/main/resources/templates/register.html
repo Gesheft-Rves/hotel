@@ -57,7 +57,12 @@
                         <label class="col-sm-2 control-label">Роль</label>
                         <div class="col-sm-10">
                             <div class="col-sm-10">
-                                <input type="text"  class="form-control" th:field="*{authorities}" th:required="required"/>
+                                <select th:field="*{authorities}"  size="1" class="form-control" th:required="required" >
+                                    <option th:each="role : ${T(com.rves.pojo.Role).values()}"
+                                            th:value="${role}"
+                                            th:text="${role}">
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
