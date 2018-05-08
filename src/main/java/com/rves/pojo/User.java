@@ -37,38 +37,12 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     private List<Role> authorities;
 
+    public User() {
+    }
+
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setAuthorities(List<Role> authorities) {
-        this.authorities = authorities;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
 
     @Override
     public String toString() {
@@ -77,8 +51,4 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 '}';
     }
-
-    public User() {
-    }
-
 }

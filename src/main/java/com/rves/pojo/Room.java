@@ -1,7 +1,12 @@
 package com.rves.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 public class Room {
     @Id
@@ -12,17 +17,15 @@ public class Room {
     @Column(name = "no")
     private Integer no;
 
-    @OneToOne
-    @JoinColumn
-    private RoomType type;
-
-    private boolean cleaningRequired;
+    @Column(name = "type")
+    private Integer type;
 
     public Room() {
     }
 
-    public Room(Integer no) {
+    public Room(Integer no, Integer type) {
         this.no = no;
+        this.type = type;
     }
 
     @Override
@@ -33,37 +36,4 @@ public class Room {
                 ", type=" + type +
                 '}';
     }
-
-    public boolean isCleaning_required() {
-        return cleaningRequired;
-    }
-
-    public void setCleaning_required(boolean cleaningRequired) {
-        this.cleaningRequired = cleaningRequired;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getNo() {
-        return no;
-    }
-
-    public void setNo(Integer no) {
-        this.no = no;
-    }
-
-    public RoomType getType() {
-        return type;
-    }
-
-    public void setType(RoomType type) {
-        this.type = type;
-    }
-
 }

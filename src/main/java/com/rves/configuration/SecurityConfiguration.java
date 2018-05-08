@@ -38,15 +38,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             .antMatchers("/resources/**", "/login/**").permitAll()
-            .antMatchers("/booking/**").hasAnyRole("ADMIN","USER")
-
-            .antMatchers("/rooms/details/").hasAnyRole("ADMIN","USER","CLEANER")
-            .antMatchers("/rooms/form/").hasAnyRole("ADMIN","USER")
-            .antMatchers("/rooms/list/").hasAnyRole("ADMIN","USER")
-
-            .antMatchers("/type/**").hasAnyRole("ADMIN","USER")
-            .antMatchers("/users/**").hasRole("ADMIN")
-            .antMatchers("/cleanRoom/**").hasAnyRole("ADMIN","CLEANER")
+            .antMatchers("/booking/**").hasAnyRole("SUPER","HOTEL_ADMIN")
+            .antMatchers("/rooms/**").hasAnyRole("SUPER","HOTEL_ADMIN")
+            .antMatchers("/type/**").hasAnyRole("SUPER","HOTEL_ADMIN")
+            .antMatchers("/users/**").hasRole("SUPER")
+            .antMatchers("/cleanRoom/**").hasAnyRole("SUPER","HOTEL_CLEANER")
             .anyRequest().authenticated()
         .and()
         .formLogin()
