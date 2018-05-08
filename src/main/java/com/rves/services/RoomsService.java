@@ -6,6 +6,7 @@ import com.rves.repositories.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,5 +37,18 @@ public class RoomsService implements PojoService<Room> {
     @Override
     public void delete(Integer id) {
         roomsRepository.delete(id);
+    }
+
+    // список грязных комнат
+    public List<Room> unclearedRooms(){
+        List<Room> rooms = list();
+        List<Room> dirtyRooms = new ArrayList<>();
+
+        for (Room room : rooms) {
+            if (room.isCleaning_required() == true){
+                dirtyRooms.add(room);
+            }
+        }
+        return dirtyRooms;
     }
 }

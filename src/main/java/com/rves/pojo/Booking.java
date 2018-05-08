@@ -26,13 +26,15 @@ public class Booking {
     @Column(name = "arrival_date")
     private Date arrival_date;
 
-
     @Column(name = "date_of_departure")
     private Date date_of_departure;
 
     @OneToOne
     @JoinColumn
     private User user;
+
+    @Column
+    private boolean canceled;
 
     public Booking() {
     }

@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title th:text="'Редактирование текущей брони'"></title>
+    <title th:text="'Новая бронь'"></title>
 
     <!--/*/ <th:block th:include="fragments/header:: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <h2  th:text="'Редактирование текущей брони'"></h2>
+    <h2  th:text="'Новая бронь'"></h2>
     <div>
         <ul>
             <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
@@ -42,12 +42,12 @@
                 <label class="col-sm-2 control-label" th:text="'Категория номера'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <select  th:field="*{room}"  size="1" class="form-control" th:required="required"  >
+                        <select  th:field="*{roomType}"  size="1" class="form-control" th:required="required"  >
                             <div>
                                 <option th:each="bookingRoomType : ${roomTypes}"
                                         th:value="${bookingRoomType.id}"
                                         th:text="${bookingRoomType.name}"
-                                        th:with="temp=${booking.room.type}"
+                                        th:with="temp=${booking.roomType}"
                                         th:selected="${#strings.equals(temp, bookingRoomType.name)}">
                                 </option>
                             </div>
@@ -56,19 +56,7 @@
                 </div>
             </div>
 
-            <div th:if="${booking.canceled} == false">
-                <div class="alert alert-success">
-                    <strong>Бронь активна</strong>
-                </div>
-                <a th:href="${'/booking/cancellation/' + booking.id}" class="btn btn-default btn-block" role="button">Отменить бронь</a>
-            </div>
 
-            <div th:if="${booking.canceled} == true">
-                <div class="alert alert-danger">
-                    <strong>Бронь не активна</strong>
-                </div>
-                <a th:href="${'/booking/cancellation/' + booking.id}" class="btn btn-default btn-block" role="button">Восстановить бронь</a>
-            </div>
 
             <div>
                 <button type="submit" class="btn btn-default btn-block" th:text="'Сохранить'"></button>

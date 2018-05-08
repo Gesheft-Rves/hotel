@@ -82,7 +82,7 @@ public class BookingController {
         model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("roomslist", roomsService.list());
         model.addAttribute("booking", new BookingDto());
-        return "/booking/form";
+        return "/booking/createbooking";
     }
 
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
@@ -101,7 +101,7 @@ public class BookingController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("roomTypes", roomTypeService.list());
             model.addAttribute("roomslist",  roomsService.list());
-            return "/booking/form";
+            return "/booking/createbooking";
         }
         Booking createdBookingEntry = bookingService.saveFromDto(bookingDto);
         return "redirect:/booking/details/" + createdBookingEntry.getId();
@@ -131,5 +131,18 @@ public class BookingController {
         }
 
         return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping("/booking/cancellation/{id}")
+    public String reverseStatusRoom(@PathVariable Integer id, Model model){
+        Booking booking = bookingService.getById(id);
+        if (!booking.isCanceled()) {
+            booking.setCanceled(true);
+        } else if (booking.isCanceled()){
+            booking.setCanceled(false);
+        }
+        bookingService.save(booking);
+        model.addAttribute("booking", booking);
+        return "/booking/details";
     }
 }
