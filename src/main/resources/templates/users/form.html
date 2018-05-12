@@ -2,72 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title th:text="'Новый пользователь'"></title>
+    <title th:text="Редактирование"></title>
 
     <!--/*/ <th:block th:include="fragments/header:: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <h2  th:text="Редактирование"></h2>
-    <div>
-        <form class="form-horizontal" th:object="${user}" th:action="@{/users/save}" method="post">
-            <input type="hidden" th:field="${user.id}"/>
-            <input type="hidden" th:field="*{accountNonExpired}"/>
-            <input type="hidden" th:field="*{accountNonLocked}"/>
-            <input type="hidden" th:field="*{credentialsNonExpired}"/>
+    <div class="container">
+        <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+        <h2  th:text="Редактирование"></h2>
+        <div>
+            <form class="form-horizontal" th:object="${user}" th:action="@{/users/save}" method="post">
+                <input type="hidden" th:field="${user.id}"/>
+                <input type="hidden" th:field="*{accountNonExpired}"/>
+                <input type="hidden" th:field="*{accountNonLocked}"/>
+                <input type="hidden" th:field="*{credentialsNonExpired}"/>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Имя</label>
-                <div class="col-sm-10">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Имя</label>
                     <div class="col-sm-10">
-                        <input type="text" id="username" placeholder="Введите имя пользователя " class="form-control" th:field="*{username}" th:required="required"/>
-                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger" role="alert"></div>
+                        <div class="col-sm-10">
+                            <input type="text" id="username" placeholder="Введите имя пользователя " class="form-control" th:field="*{username}" th:required="required"/>
+                            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger" role="alert"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Пароль</label>
-                <div class="col-sm-10">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Пароль</label>
                     <div class="col-sm-10">
-                        <input type="password" id="password" placeholder="Введите пароль пользователя " class="form-control" th:field="*{password}" th:required="required"/>
-                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert"></div>
-
+                        <div class="col-sm-10">
+                            <input type="password" id="password" placeholder="Введите пароль пользователя " class="form-control" th:field="*{password}" th:required="required"/>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Роль</label>
-                <div class="col-sm-10">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Роль</label>
                     <div class="col-sm-10">
-                        <select th:field="*{authorities}"  size="1" class="form-control" th:required="required" >
-                            <option th:each="role : ${T(com.rves.pojo.Role).values()}"
-                                    th:value="${role}"
-                                    th:text="${role}">
-                            </option>
-                        </select>
+                        <div class="col-sm-10">
+                            <select th:field="*{authorities}"  size="1" class="form-control" th:required="required" >
+                                <option th:each="role : ${T(com.rves.pojo.Role).values()}"
+                                        th:value="${role}"
+                                        th:text="${role}">
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Заблокировать</label>
-                <div class="col-sm-10">
-                    <div class="col-sm-2">
-                        <input type="checkbox"  class="form-control" th:field="*{enabled}" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Активирован</label>
+                    <div class="col-sm-10">
+                        <div class="col-sm-2">
+                            <input type="checkbox"  class="form-control" th:field="*{enabled}" />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div>
-                <button type="submit" class="btn btn-default btn-block" th:text="'Сохранить'"></button>
-            </div>
-        </form>
+                <div>
+                    <button type="submit" class="btn btn-default btn-block" th:text="'Сохранить'"></button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

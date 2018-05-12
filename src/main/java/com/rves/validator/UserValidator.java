@@ -23,7 +23,7 @@ public class UserValidator implements org.springframework.validation.Validator {
         UserDto user = (UserDto) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.message.empty");
-        if (user.getUsername().length() < 5 || user.getUsername().length() > 32) {
+        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
             errors.rejectValue("username", "error.message.size.username");
         }
 
