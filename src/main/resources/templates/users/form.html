@@ -10,10 +10,10 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <h2  th:text="'Новый пользователь/ Редактирование'"></h2>
+    <h2  th:text="Редактирование"></h2>
     <div>
         <form class="form-horizontal" th:object="${user}" th:action="@{/users/save}" method="post">
-            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="${user.id}"/>
             <input type="hidden" th:field="*{accountNonExpired}"/>
             <input type="hidden" th:field="*{accountNonLocked}"/>
             <input type="hidden" th:field="*{credentialsNonExpired}"/>

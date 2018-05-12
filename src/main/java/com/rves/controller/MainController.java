@@ -28,15 +28,15 @@ public class MainController {
         String role = String.valueOf(userService.loadUserByUsername(name).getAuthorities());
 
         switch (role) {
-            case ("ROLE_ADMIN"):
+            case ("ROLE_SUPER"):
                 model.addAttribute("message", "Добро пожаловать в отель, " + name);
                 updateModelForAdmin(model);
                 return "adminIndex";
-            case "[ROLE_CLEANER]":
+            case "[ROLE_HOTEL_CLEANER]":
                 model.addAttribute("message", "Добро пожаловать в отель, " + name);
                 updateModelForCleaner(model);
                 return "cleanerIndex";
-            case "[ROLE_USER]":
+            case "[ROLE_HOTEL_ADMIN]":
                 updateModelForUser(model);
                 model.addAttribute("message", "Добро пожаловать в отель. Создай мне чуточку броней на сегодня, " + name);
                 return "userindex";
