@@ -85,17 +85,29 @@ public class BookingController {
         return "/booking/createbooking";
     }
 
-    @RequestMapping(value = "/booking/saveEditedRoom", method = RequestMethod.POST)
+    @RequestMapping(value = "/booking/saveEdited", method = RequestMethod.POST)
     public String saveEditedRoom(@ModelAttribute("booking") Booking booking, Integer id, BookingDto bookingDto , BindingResult bindingResult, Model model){
-            booking = bookingService.getById(id);
-            booking.setCanceled(bookingDto.isCanceled());
-            booking.setUser(bookingDto.getUser());
-            booking.setRoom(bookingDto.getRoom());
-            booking.setArrival_date(bookingDto.getArrival_date());
-            booking.setDate_of_departure(bookingDto.getDate_of_departure());
-            booking.setDate_buking(bookingDto.getDate_buking());
-            bookingService.save(booking);
-            return "redirect:/booking/details/" + booking.getId();
+        bookingDto.setUser(userService.getCurrentLoggedInUser());
+
+        booking = bookingService.getById(id);
+
+        booking.setCanceled(bookingDto.isCanceled());
+        booking.setUser(bookingDto.getUser());
+        booking.setRoom(bookingDto.getRoom());
+        booking.setArrival_date(bookingDto.getArrival_date());
+        booking.setDate_of_departure(bookingDto.getDate_of_departure());
+        booking.setDate_buking(bookingDto.getDate_buking());
+
+        bookingValidator.validate(bookingDto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roomTypes", roomTypeService.list());
+            model.addAttribute("roomslist",  roomsService.list());
+            return "/booking/forEdit";
+        }
+
+        bookingService.save(booking);
+        return "redirect:/booking/details/" + booking.getId();
     }
 
 

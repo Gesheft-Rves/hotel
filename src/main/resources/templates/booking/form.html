@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title th:text="'Редактирование текущей брони'"></title>
+    <title th:text="'Новое бронирование'"></title>
 
     <!--/*/ <th:block th:include="fragments/header:: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <h2  th:text="'Редактирование текущей брони'"></h2>
+    <h2  th:text="'Создание новой брони'"></h2>
     <div>
         <ul>
             <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
