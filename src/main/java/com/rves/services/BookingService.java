@@ -103,7 +103,7 @@ public class BookingService implements PojoService<Booking> {
         List<Room> rooms = roomService.list();
 
         outer:  for (Room currentRoom:rooms) {
-            if (!currentRoom.getType().equals(type)&& currentRoom.isCleaningRequired()) {continue;}
+            if (!currentRoom.getType().getId().equals(type)&& currentRoom.isCleaningRequired()) {continue;}
             for (Booking currentBooking:bookings) {
                 if (!currentBooking.isCanceled()){
                     if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {

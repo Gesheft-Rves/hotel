@@ -74,7 +74,7 @@ public class BookingController {
         model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("roomslist", roomsService.list());
         model.addAttribute("booking", bookingService.getById(id));
-        return "/booking/form";
+        return "/booking/forEdit";
     }
 
     @RequestMapping("/booking/new")
@@ -85,12 +85,26 @@ public class BookingController {
         return "/booking/createbooking";
     }
 
+    @RequestMapping(value = "/booking/saveEditedRoom", method = RequestMethod.POST)
+    public String saveEditedRoom(@ModelAttribute("booking") Booking booking, Integer id, BookingDto bookingDto , BindingResult bindingResult, Model model){
+            booking = bookingService.getById(id);
+            booking.setCanceled(bookingDto.isCanceled());
+            booking.setUser(bookingDto.getUser());
+            booking.setRoom(bookingDto.getRoom());
+            booking.setArrival_date(bookingDto.getArrival_date());
+            booking.setDate_of_departure(bookingDto.getDate_of_departure());
+            booking.setDate_buking(bookingDto.getDate_buking());
+            bookingService.save(booking);
+            return "redirect:/booking/details/" + booking.getId();
+    }
+
+
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model){
         Room freeRoom = bookingService.freeRoomSearch(
                 bookingDto.getArrival_date(),
                 bookingDto.getDate_of_departure(),
-                bookingDto.getRoomType()
+                bookingDto.getRoomType().getId()
         );
 
         bookingDto.setRoom(freeRoom);
