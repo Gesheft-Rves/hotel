@@ -2,7 +2,6 @@ package com.rves.services;
 
 
 import com.rves.Dto.UserDto;
-import com.rves.pojo.Role;
 import com.rves.pojo.User;
 import com.rves.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -55,13 +53,12 @@ public class UserService implements UserDetailsService, PojoService<User> {
     public User getCurrentLoggedInUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        User user = (User) loadUserByUsername(name);
-        return user;
+        return (User) loadUserByUsername(name);
     }
 
     public User createUser(UserDto userDto){
         User user = new User();
-        user.setAuthorities(Arrays.asList(Role.values()));
+        user.setAuthorities(userDto.getAuthorities());
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         user.setAccountNonExpired(true);

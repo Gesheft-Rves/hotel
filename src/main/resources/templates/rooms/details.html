@@ -21,8 +21,6 @@
 
                 <label class="col-sm-2 control-label">Категория номера</label>
                 <div class="col-sm-10">
-                    <!--<p class="form-control-static" th:text="${room.type}"></p>-->
-                    <!-- <td th:with="type=${room.type}" th:text="${type.name}"></td>-->
                     <p class="form-control-static"
                        th:text="${room.type.name}">
                     </p>
@@ -30,13 +28,13 @@
 
                 <label class="col-sm-2 control-label">Статус номера</label>
                 <div class="col-sm-10">
-                    <div th:if="${room.cleaning_required} == false">
+                    <div th:if="${room.cleaningRequired} == false">
                         <div class="alert alert-success">
                             <strong>Номер чист.</strong>
                         </div>
                         <a th:href="${'/rooms/reverse_status/' + room.id}" class="btn btn-default" role="button">Требуется уборка</a>
                     </div>
-                    <div th:if="${room.cleaning_required} == true">
+                    <div th:if="${room.cleaningRequired} == true">
                         <div class="alert alert-danger">
                             <strong>Номер не убран!</strong>
                         </div>

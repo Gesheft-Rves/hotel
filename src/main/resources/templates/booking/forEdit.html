@@ -2,22 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title th:text="'Новое бронирование'"></title>
+    <title th:text="'Редактирование текущей брони'"></title>
 
     <!--/*/ <th:block th:include="fragments/header:: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <h2  th:text="'Создание новой брони'"></h2>
+    <h2  th:text="'Редактирование текущей брони'"></h2>
     <div>
         <ul>
             <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
         </ul>
-        <form  class="form-horizontal" th:object="${booking}" th:action="@{/booking/save}" method="post">
-            <input type="hidden" th:field="*{id}"/>
+        <form  class="form-horizontal" th:object="${booking}" th:action="@{/booking/saveEdited}" method="post">
+            <input type="hidden" th:field="${booking.id}"/>
+            <input type="hidden" th:field="${booking.room.id}"/>
             <input type="hidden" th:field="*{room}"/>
-            <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="alert alert-danger" role="alert"></div>
+
             <div class="form-group">
                 <label class="col-sm-2 control-label" th:text="'Дата заезда'"></label>
                 <div class="col-sm-10">
@@ -34,24 +35,6 @@
                     <div class="col-sm-10">
                         <input type="date" placeholder="Введите дату выезда гостя" class="form-control" th:field="*{date_of_departure}" th:required="required"/>
                         <div th:if="${#fields.hasErrors('date_of_departure')}" th:errors="*{date_of_departure}" class="alert alert-danger" role="alert"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label" th:text="'Категория номера'"></label>
-                <div class="col-sm-10">
-                    <div class="col-sm-10">
-                        <select  th:field="*{room}"  size="1" class="form-control" th:required="required"  >
-                            <div>
-                                <option th:each="bookingRoomType : ${roomTypes}"
-                                        th:value="${bookingRoomType.id}"
-                                        th:text="${bookingRoomType.name}"
-                                        th:with="temp=${booking.room.type}"
-                                        th:selected="${#strings.equals(temp, bookingRoomType.name)}">
-                                </option>
-                            </div>
-                        </select>
                     </div>
                 </div>
             </div>

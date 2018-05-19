@@ -39,22 +39,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/resources/**", "/login/**").permitAll()
             .antMatchers("/booking/**").hasAnyRole("SUPER","HOTEL_ADMIN")
-            .antMatchers("/rooms/**").hasAnyRole("SUPER","HOTEL_ADMIN")
+
+            .antMatchers("/rooms/details/").hasAnyRole("SUPER","HOTEL_ADMIN","HOTEL_CLEANER")
+            .antMatchers("/rooms/form/").hasAnyRole("SUPER","HOTEL_ADMIN")
+            .antMatchers("/rooms/list/").hasAnyRole("SUPER","HOTEL_ADMIN")
+
             .antMatchers("/type/**").hasAnyRole("SUPER","HOTEL_ADMIN")
             .antMatchers("/users/**").hasRole("SUPER")
-            .antMatchers("/cleanRoom/**").hasAnyRole("SUPER","HOTEL_CLEANER")
             .anyRequest().authenticated()
-        .and()
-        .formLogin()
+            .and()
+            .formLogin()
             .loginPage("/login")
             .successForwardUrl("/home")
             .permitAll()
             .and()
-        .logout()
+            .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .permitAll()
-        .and()
-        .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

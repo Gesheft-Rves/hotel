@@ -96,14 +96,14 @@ public class BookingService implements PojoService<Booking> {
      * @param type
      * @return freeRoom
      */
-    //TODO не возвращает комнату
+
     public Room freeRoomSearch(java.sql.Date fromDate , java.sql.Date toDate, int type){
 
         List<Booking> bookings = list();
         List<Room> rooms = roomService.list();
 
         outer:  for (Room currentRoom:rooms) {
-            if (!currentRoom.getType().getId().equals(type)&& currentRoom.isCleaning_required()) {continue;}
+            if (!currentRoom.getType().getId().equals(type)&& currentRoom.isCleaningRequired()) {continue;}
             for (Booking currentBooking:bookings) {
                 if (!currentBooking.isCanceled()){
                     if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {

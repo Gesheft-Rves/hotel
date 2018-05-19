@@ -1,6 +1,7 @@
 package com.rves.Dto;
 
 import com.rves.pojo.Room;
+import com.rves.pojo.RoomType;
 import com.rves.pojo.User;
 import com.rves.services.UserService;
 import lombok.Getter;
@@ -42,7 +43,7 @@ public class BookingDto {
     @NotNull
     private Date date_of_departure;
 
-    private Integer roomType;
+    private RoomType roomType;
 
     private User user;
 
