@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Отчеты</title>
     <!--/*/ <th:block th:include="fragments/header:: head"></th:block> /*/-->
 </head>
@@ -11,13 +9,13 @@
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
     <h2  th:text="'Новый отчет'"></h2>
     <div>
-        <form class="form-horizontal" th:object="${Report}" th:action="@{/reports/example}" method="post">
+        <form class="form-horizontal" th:object="${report}" th:action="@{/reports/generating}" method="post">
 
             <div class="form-group">
                 <label class="col-sm-2 control-label" th:text="'Дата от'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <input type="date" placeholder="Введите начальную дату " class="form-control" id="dateFrom" th:field="*{dateFrom}"  th:required="required"/>
+                        <input type="datetime-local" placeholder="Введите начальную дату " class="form-control" id="dateFromRep" th:field="*{dateFromRep}"/>
                     </div>
                 </div>
             </div>
@@ -26,37 +24,22 @@
                 <label class="col-sm-2 control-label" th:text="'Дата до'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <input type="date" placeholder="Введите окончательную дату" class="form-control" id="dateTo" th:field="*{dateTo}" th:required="required"/>
+                        <input type="datetime-local" placeholder="Введите окончательную дату" class="form-control" id="dateToRep" th:field="*{dateToRep}"/>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">По всем бронированиям</label>
+                <label class="col-sm-2 control-label" th:text="'Администратор'"></label>
                 <div class="col-sm-10">
-                    <div class="col-sm-2">
-                        <input type="checkbox"  class="form-control" th:field="*{allBookings}" />
-
-                        <div th:if="${allBookings} == false">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" th:text="'Администратор'"></label>
-                                <div class="col-sm-10">
-                                    <div class="col-sm-10">
-                                        <select id="admin" class="form-control">
-                                            <option value="" selected="selected"></option>
-                                            <option th:each="user : ${users}"
-                                                    th:value="${user.id}"
-                                                    th:text="${user.username}">
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div th:if="${allBookings} == true">
-
-                        </div>
-
+                    <div class="col-sm-10">
+                        <select id="admin" th:field="*{user}" class="form-control">
+                            <option value="" selected="selected"></option>
+                            <option th:each="user : ${users}"
+                                    th:value="${user.id}"
+                                    th:text="${user.username}">
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -64,7 +47,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Только завершенные бронирования</label>
                 <div class="col-sm-10">
-                    <div class="col-sm-2">
+                    <div class="col-sm-1">
                         <input type="checkbox"  class="form-control" th:field="*{canceledBooking}" />
                     </div>
                 </div>
@@ -80,12 +63,3 @@
 </div>
 </body>
 </html>
-<!--Сделай страничку новую - reports-->
-<!--Чтоб там была форма с полями-->
-<!--дата начала-->
-<!--дата конца-->
-<!--админ (выбор из всех существующих)-->
-<!--галочка "По всем" (если стоит админа нельзя выбрать)-->
-<!--галочка -  Завершенные брони - учесть ок-->
-<!--По нажатию сгенерировать - чтоб генерился отчет по броням-->
-<!--POST запрос котнтроллер как в примере с отчетом, только post-->

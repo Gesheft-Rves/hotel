@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,6 +56,47 @@ public class BookingService implements PojoService<Booking> {
     @Override
     public void delete(Integer id) {
         repository.delete(id);
+    }
+
+    //generation of a list for report of input parameters
+    public List<Booking> generationForReport (Timestamp dateFromReport, Timestamp dateToReport, Integer userId, Boolean canceledBooking){
+
+        List<Booking> result = new ArrayList<>();
+        result.addAll(list());
+
+        final long dateFromTime = dateFromReport.getTime();
+        if (dateFromReport != null){
+            result = result.stream()
+                    .filter(booking -> {
+                        long bookingTime = booking.getDate_buking().getTime();
+                        return bookingTime > dateFromTime;
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        final long dateToTime = dateToReport.getTime();
+        if (dateToReport != null){
+            result = result.stream()
+                    .filter(booking -> {
+                        long bookingTime = booking.getDate_buking().getTime();
+                        return bookingTime < dateToTime;
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        if (userId!= null){
+            result = result.stream()
+                    .filter(e -> e.getUser().getId().equals(userId))
+                    .collect(Collectors.toList());
+        }
+
+        if (canceledBooking){
+            result = result.stream()
+                    .filter(Booking::isCanceled)
+                    .collect(Collectors.toList());
+        }
+
+        return result;
     }
 
     //booking time is coming to an end
