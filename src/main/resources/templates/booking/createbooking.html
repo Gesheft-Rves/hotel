@@ -3,7 +3,7 @@
 <head lang="en">
 
     <title th:text="'Новая бронь'"></title>
-
+    <script th:src="@{/js/functions.js}"></script>
     <!--/*/ <th:block th:include="fragments/header:: head"></th:block> /*/-->
 </head>
 <body>
@@ -14,7 +14,7 @@
         <ul>
             <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
         </ul>
-        <form  class="form-horizontal" th:object="${booking}" th:action="@{/booking/save}" method="post">
+        <form  class="form-horizontal"  id="bookingForm" th:object="${booking}" th:action="@{/booking/save}" method="post">
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{room}"/>
             <div th:if="${#fields.hasErrors('room')}" th:errors="*{room}" class="alert alert-danger" role="alert"></div>
@@ -22,7 +22,7 @@
                 <label class="col-sm-2 control-label" th:text="'Дата заезда'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <input type="date" placeholder="Введите дату заезда гостя" class="form-control" th:field="*{arrival_date}" th:required="required"/>
+                        <input type="datetime-local" placeholder="Введите дату заезда гостя" class="form-control" id="dateFromArrivalFilter" th:field="*{arrival_date}" th:required="required" onchange="performFilter()"/>
                         <div th:if="${#fields.hasErrors('arrival_date')}" th:errors="*{arrival_date}" class="alert alert-danger" role="alert"></div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <label class="col-sm-2 control-label" th:text="'Дата выезда'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <input type="date" placeholder="Введите дату выезда гостя" class="form-control" th:field="*{date_of_departure}" th:required="required"/>
+                        <input type="datetime-local" placeholder="Введите дату выезда гостя" class="form-control" id="dateFromDepartureFilter" th:field="*{date_of_departure}" th:required="required" onchange="performFilter()"/>
                         <div th:if="${#fields.hasErrors('date_of_departure')}" th:errors="*{date_of_departure}" class="alert alert-danger" role="alert"></div>
                     </div>
                 </div>
@@ -42,13 +42,11 @@
                 <label class="col-sm-2 control-label" th:text="'Категория номера'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <select  th:field="*{roomType}"  size="1" class="form-control" th:required="required"  >
+                        <select  th:field="*{roomType}"  size="1" class="form-control" id="roomTypeFilter" th:required="required" onchange="getRoomsFromServer()" >
                             <div>
                                 <option th:each="bookingRoomType : ${roomTypes}"
                                         th:value="${bookingRoomType.id}"
-                                        th:text="${bookingRoomType.name}"
-                                        th:with="temp=${booking.roomType}"
-                                        th:selected="${#strings.equals(temp, bookingRoomType.name)}">
+                                        th:text="${bookingRoomType.name}">
                                 </option>
                             </div>
                         </select>
@@ -56,10 +54,30 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-2 control-label" th:text="'Номер'"></label>
+                <div class="col-sm-10">
+                    <select id="rooms" class="form-control" th:field="*{room}"  > <!-- Это разве фильтр комнат? Это и есть комнаты. просто room -->
 
+                    </select>
+                </div>
+            </div>
+
+
+            <script th:inline="javascript">
+                $( document ).ready(function() {
+                    getRoomsFromServer();
+                });
+
+                function getRoomsFromServer() {
+                    var header = $("meta[name='_csrf_header']").attr("content");
+                    var token = $("meta[name='_csrf']").attr("content");
+                    getRoomsFromServerApi(header, token);
+                }
+            </script>
 
             <div>
-                <button type="submit" class="btn btn-default btn-block" th:text="'Сохранить'"></button>
+                <button type="submit" id="postSave" class="btn btn-default btn-block" th:text="'Сохранить'"></button>
             </div>
         </form>
 
