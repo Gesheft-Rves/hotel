@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -90,14 +91,7 @@ public class BookingService implements PojoService<Booking> {
         return repository.save(booking);
     }
 
-    /**
-     * @param fromDate
-     * @param toDate
-     * @param type
-     * @return freeRoom
-     */
-
-    public Room freeRoomSearch(java.sql.Date fromDate , java.sql.Date toDate, int type){
+    public Room freeRoomSearch(Timestamp fromDate , Timestamp toDate, int type){
 
         List<Booking> bookings = list();
         List<Room> rooms = roomService.list();

@@ -60,8 +60,8 @@ function filter(header, token) {
                 cellbookingId.innerHTML     = bookings[i].id;
                 cellDate.innerHTML          = new Date(bookings[i].date_buking).toLocaleString("ru", options);
                 cellRoom.innerHTML          = bookings[i].room.no;
-                cellArrivalDate.innerHTML   = bookings[i].arrival_date;
-                cellDateDeparture.innerHTML = bookings[i].date_of_departure;
+                cellArrivalDate.innerHTML   = new Date(bookings[i].arrival_date).toLocaleString("ru", options);
+                cellDateDeparture.innerHTML = new Date(bookings[i].date_of_departure).toLocaleString("ru", options);
                 cellAdmins.innerHTML        = bookings[i].user.username;
 
                 var id = bookings[i].id

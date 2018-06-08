@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -37,11 +36,11 @@ public class BookingDto {
 
     @FutureOrPresent
     @NotNull
-    private Date arrival_date;
+    private Timestamp arrival_date;
 
     @Future
     @NotNull
-    private Date date_of_departure;
+    private Timestamp date_of_departure;
 
     private RoomType roomType;
 

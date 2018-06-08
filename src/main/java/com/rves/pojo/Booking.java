@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -24,10 +23,13 @@ public class Booking {
     private Room room;
 
     @Column(name = "arrival_date")
-    private Date arrival_date;
+    private Timestamp arrival_date;
 
     @Column(name = "date_of_departure")
-    private Date date_of_departure;
+    private Timestamp date_of_departure;
+
+    @Column(name = "lastDayCleaning")
+    private Timestamp lastDayCleaning;
 
     @OneToOne
     @JoinColumn
