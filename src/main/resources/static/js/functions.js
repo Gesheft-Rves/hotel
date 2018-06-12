@@ -89,3 +89,46 @@ function filter(header, token) {
     }
 }
 
+function getRoomsFromServerApi(header, token) {
+    var arrivalDate   = $("#dateFromArrivalFilter").val();
+    var departureDate = $("#dateFromDepartureFilter").val();
+    var roomType = $("#roomTypeFilter").val();
+
+    if (arrivalDate == '')  return false ;
+    if (departureDate == '')  return false ;
+    if (roomType == '')  return false ;
+
+    var search = {}
+    search["dateFromArrivalFilterStr"]     = arrivalDate;
+    search["dateFromDepartureFilterStr"]   = departureDate;
+    search["roomTypeFilterStr"]   = roomType;
+
+    $.ajax({
+        type: "POST",
+        url: "/booking/api/roomFilter",
+        data: JSON.stringify(search),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+
+        beforeSend: function(xhr){ xhr.setRequestHeader(header, token);},
+
+        success: function (data) {
+            updateRooms(data.rooms);
+        }
+    })
+}
+
+function updateRooms(rooms) {
+    /*<![CDATA[*/
+
+    var options = "<option value='' selected='selected' >Select to Filter..</option>";
+    for (var i = 0; i < rooms.length; i++) {
+        options += "<option value='"+rooms[i].id+"' text='"+rooms[i].no+"'>"+rooms[i].no+"</option>"
+    }
+    $('#rooms').html(options);
+}

@@ -3,6 +3,7 @@ package com.rves.services;
 
 import com.rves.Dto.BookingDto;
 import com.rves.Dto.CurrentFilterBooking;
+import com.rves.Dto.CurrentFilterRoom;
 import com.rves.pojo.Booking;
 import com.rves.pojo.Room;
 import com.rves.repositories.BookingRepository;
@@ -86,30 +87,44 @@ public class BookingService implements PojoService<Booking> {
         booking.setRoom(bookingDto.getRoom());
         booking.setArrival_date(bookingDto.getArrival_date());
         booking.setDate_of_departure(bookingDto.getDate_of_departure());
-        booking.setUser(userService.getCurrentLoggedInUser());
+        booking.setUser(bookingDto.getUser());
         booking.setCanceled(false);
         return repository.save(booking);
     }
 
-    public Room freeRoomSearch(Timestamp fromDate , Timestamp toDate, int type){
+    public List<Room> findAllMatchingCriteria(CurrentFilterRoom filterRoom){
 
+        filterRoom.parse();
         List<Booking> bookings = list();
         List<Room> rooms = roomService.list();
+        List<Room> result = new ArrayList<>();
 
-        outer:  for (Room currentRoom:rooms) {
-            if (!currentRoom.getType().getId().equals(type)&& currentRoom.isCleaningRequired()) {continue;}
-            for (Booking currentBooking:bookings) {
-                if (!currentBooking.isCanceled()){
+        Timestamp arrivalDate = filterRoom.getDateFromArrivalFilter();
+        Timestamp departureDate = filterRoom.getDateFromDepartureFilter();
+        Integer roomType = filterRoom.getRoomTypeFilter();
+
+        outer:
+        for (Room currentRoom : rooms) {
+            if (currentRoom.getType().getId().equals(roomType) && (!currentRoom.isCleaningRequired())) {
+                continue;
+            }
+            for (Booking currentBooking : bookings) {
+                if (!currentBooking.isCanceled()) {
                     if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {
-                        if (  !((fromDate .after(currentBooking.getDate_of_departure()))||(toDate.before(currentBooking.getArrival_date())))  ){
+                        if (!((arrivalDate.after(currentBooking.getDate_of_departure())) || (departureDate.before(currentBooking.getArrival_date())))) {
                             continue outer;
                         }
                     }
                 }
             }
-            return currentRoom;
+            result.add(currentRoom);
         }
-        return null;
+
+        result = result.stream()
+                    .filter(e -> e.getType().getId().equals(roomType))
+                    .collect(Collectors.toList());
+
+        return result;
     }
 
     public List<Booking> findAllMatchingCriteria(CurrentFilterBooking filterBooking){
