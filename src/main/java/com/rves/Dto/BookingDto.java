@@ -1,5 +1,6 @@
 package com.rves.Dto;
 
+import com.rves.Utils;
 import com.rves.pojo.Room;
 import com.rves.pojo.RoomType;
 import com.rves.pojo.User;
@@ -8,8 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
@@ -27,22 +26,22 @@ public class BookingDto {
     @NotNull
     private Integer id;
 
-    @FutureOrPresent
     @NotNull
     private Timestamp date_buking;
+    private String date_buking_str;
 
     @NotNull
     private Room room;
 
-    @FutureOrPresent
     @NotNull
-    private Timestamp arrival_date;
+    private Timestamp arrival_date;//arrival_date
+    private String arrival_date_str;//arrival_date
 
-    @Future
     @NotNull
-    private Timestamp date_of_departure;
+    private Timestamp date_of_departure; //date_of_departure
+    private String date_of_departure_str; //date_of_departure
 
-    private RoomType roomType;
+    private RoomType roomType; // setRoomType
 
     private User user;
 
@@ -52,4 +51,11 @@ public class BookingDto {
         java.util.Date date = new java.util.Date();
         return new Timestamp(date.getTime());
     }
+
+    public void parseDates() {
+        this.arrival_date = Utils.parseDateFromStringOrNow(arrival_date_str);
+        this.date_of_departure = Utils.parseDateFromStringOrNow(date_of_departure_str);
+        this.date_buking = Utils.parseDateFromStringOrNow(date_buking_str);
+    }
+
 }

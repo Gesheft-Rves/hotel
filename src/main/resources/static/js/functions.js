@@ -94,9 +94,18 @@ function getRoomsFromServerApi(header, token) {
     var departureDate = $("#dateFromDepartureFilter").val();
     var roomType = $("#roomTypeFilter").val();
 
-    if (arrivalDate == '')  return false ;
-    if (departureDate == '')  return false ;
-    if (roomType == '')  return false ;
+    var roomDiv = $("#roomSelectDiv");
+    var warnDiv = $("#warningDiv");
+
+
+    if (arrivalDate == '' || departureDate == '' || roomType == '') {
+        roomDiv.hide();
+        warnDiv.show();
+        return false ;
+    }
+
+    roomDiv.show();
+    warnDiv.hide();
 
     var search = {}
     search["dateFromArrivalFilterStr"]     = arrivalDate;

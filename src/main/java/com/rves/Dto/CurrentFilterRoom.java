@@ -1,13 +1,12 @@
 package com.rves.Dto;
 
+import com.rves.Utils;
 import com.rves.bootstrap.ApplicationContextHolder;
 import com.rves.services.RoomTypeService;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
@@ -32,11 +31,11 @@ public class CurrentFilterRoom {
 
         dateFromArrivalFilter = "".equals(dateFromArrivalFilterStr)
                 ? null
-                : parseDate(dateFromArrivalFilterStr);
+                : Utils.parseDateFromStringOrNow(dateFromArrivalFilterStr);
 
         dateFromDepartureFilter = "".equals(dateFromDepartureFilterStr)
                 ? null
-                : parseDate(dateFromDepartureFilterStr);
+                : Utils.parseDateFromStringOrNow(dateFromDepartureFilterStr);
 
         roomTypeFilter = "".equals(roomTypeFilterStr)
                 ? null
@@ -50,14 +49,5 @@ public class CurrentFilterRoom {
                 && roomTypeFilter == null;
     }
 
-    private Timestamp parseDate(String strTimestampDate){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        try {
-            return new Timestamp(dateFormat.parse(strTimestampDate.replace("T"," ")).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

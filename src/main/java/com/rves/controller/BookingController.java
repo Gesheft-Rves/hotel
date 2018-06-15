@@ -110,25 +110,19 @@ public class BookingController {
 
 
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model){
+    public String save(@ModelAttribute("booking") BookingDto booking , BindingResult bindingResult, Model model){
 
-        if (bookingDto.getRoom()== null){
-            System.out.println("_______________");
-            System.out.println("_______________");
-            System.out.println("_______________");
-            System.out.println("_______________");
-            System.out.println("Комната не приходит");
-        } System.out.println(bookingDto.getRoom().toString());
+        booking.parseDates();
 
-        bookingDto.setUser(userService.getCurrentLoggedInUser());
-        bookingValidator.validate(bookingDto, bindingResult);
+        booking.setUser(userService.getCurrentLoggedInUser());
+        bookingValidator.validate(booking, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("roomTypes", roomTypeService.list());
             model.addAttribute("roomslist",  roomsService.list());
             return "/booking/createbooking";
         }
-        Booking createdBookingEntry = bookingService.saveFromDto(bookingDto);
+        Booking createdBookingEntry = bookingService.saveFromDto(booking);
         return "redirect:/booking/details/" + createdBookingEntry.getId();
     }
 

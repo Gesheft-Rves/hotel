@@ -45,8 +45,7 @@ public class MainController {
     }
 
     private void updateModelForAdmin(Model model){
-        model.addAttribute("rooms",roomsService.unclearedRooms());
-        model.addAttribute("bookings",bookingService.bookingEndTimeList());
+        model.addAttribute("users",userService.list());
     }
 
     private void updateModelForCleaner(Model model){
