@@ -1,7 +1,6 @@
 package com.rves.Dto;
 
 import com.rves.Utils;
-import com.rves.Utils;
 import com.rves.pojo.Room;
 import com.rves.pojo.RoomType;
 import com.rves.pojo.User;
