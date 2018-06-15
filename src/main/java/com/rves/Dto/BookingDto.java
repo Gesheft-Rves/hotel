@@ -30,18 +30,18 @@ public class BookingDto {
 
     @FutureOrPresent
     @NotNull
-    private Timestamp date_buking;
+    private Timestamp dateBuking;
 
     @NotNull
     private Room room;
 
     @FutureOrPresent
     @NotNull
-    private Date arrival_date;
+    private Date arrivalDate;
 
     @Future
     @NotNull
-    private Date date_of_departure;
+    private Date dateOfDeparture;
 
     private RoomType roomType;
 
@@ -49,7 +49,7 @@ public class BookingDto {
 
     private boolean canceled;
 
-    public Timestamp getDate_buking() {
+    public Timestamp getDateBuking() {
         java.util.Date date = new java.util.Date();
         return new Timestamp(date.getTime());
     }

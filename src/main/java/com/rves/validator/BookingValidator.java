@@ -34,12 +34,12 @@ public class BookingValidator implements Validator {
             errors.rejectValue("room", "error.message.no_room_available");
         }
 
-        if (!isValidArrivalDate(booking.getArrival_date())) {
-            errors.rejectValue("arrival_date", "error.message.invalid_arrival_date");
+        if (!isValidArrivalDate(booking.getArrivalDate())) {
+            errors.rejectValue("arrivalDate", "error.message.invalid_arrival_date");
         }
 
-        if(booking.getDate_of_departure().before(booking.getArrival_date())){
-            errors.rejectValue("date_of_departure", "error.message.invalid_date_of_departure");
+        if(booking.getDateOfDeparture().before(booking.getArrivalDate())){
+            errors.rejectValue("dateOfDeparture", "error.message.invalid_date_of_departure");
         }
     }
 
