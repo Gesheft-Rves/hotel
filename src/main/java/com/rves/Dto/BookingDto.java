@@ -1,6 +1,7 @@
 package com.rves.Dto;
 
 import com.rves.Utils;
+import com.rves.Utils;
 import com.rves.pojo.Room;
 import com.rves.pojo.RoomType;
 import com.rves.pojo.User;
@@ -27,35 +28,34 @@ public class BookingDto {
     private Integer id;
 
     @NotNull
-    private Timestamp date_buking;
-    private String date_buking_str;
-
+    private Timestamp dateBuking;
+    private String dateBukingStr;
     @NotNull
     private Room room;
 
     @NotNull
-    private Timestamp arrival_date;//arrival_date
-    private String arrival_date_str;//arrival_date
+    private Timestamp arrivalDate;
+    private String arrivalDateStr;
 
     @NotNull
-    private Timestamp date_of_departure; //date_of_departure
-    private String date_of_departure_str; //date_of_departure
+    private Timestamp dateOfDeparture;
+    private String dateOfDepartureStr;
 
-    private RoomType roomType; // setRoomType
+    private RoomType roomType;
 
     private User user;
 
     private boolean canceled;
 
-    public Timestamp getDate_buking() {
+    public Timestamp getDateBuking() {
         java.util.Date date = new java.util.Date();
         return new Timestamp(date.getTime());
     }
 
     public void parseDates() {
-        this.arrival_date = Utils.parseDateFromStringOrNow(arrival_date_str);
-        this.date_of_departure = Utils.parseDateFromStringOrNow(date_of_departure_str);
-        this.date_buking = Utils.parseDateFromStringOrNow(date_buking_str);
+        this.arrivalDate = Utils.parseDateFromStringOrNow(arrivalDateStr);
+        this.dateOfDeparture = Utils.parseDateFromStringOrNow(dateOfDepartureStr);
+        this.dateBuking = Utils.parseDateFromStringOrNow(dateBukingStr);
     }
 
 }

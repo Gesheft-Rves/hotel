@@ -12,21 +12,21 @@ import java.sql.Timestamp;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private Integer id;
 
-    @Column(name = "date_buking")
-    private Timestamp date_buking;
+    @Column
+    private Timestamp dateBuking;
 
     @OneToOne
     @JoinColumn
     private Room room;
 
-    @Column(name = "arrival_date")
-    private Timestamp arrival_date;
+    @Column
+    private Timestamp arrivalDate;
 
-    @Column(name = "date_of_departure")
-    private Timestamp date_of_departure;
+    @Column
+    private Timestamp dateOfDeparture;
 
     @Column(name = "lastDayCleaning")
     private Timestamp lastDayCleaning;

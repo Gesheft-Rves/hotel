@@ -29,18 +29,18 @@ public class BookingValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        BookingDto bookingDto = (BookingDto) o ;
+        BookingDto booking = (BookingDto) o ;
 
-        if (bookingDto.getRoom() == null) {
+        if (booking.getRoom() == null) {
             errors.rejectValue("room", "error.message.no_room_available");
         }
 
-        if (!isValidArrivalDate(bookingDto.getArrival_date())) {
-            errors.rejectValue("arrival_date", "error.message.invalid_arrival_date");
+        if (!isValidArrivalDate(booking.getArrivalDate())) {
+            errors.rejectValue("arrivalDate", "error.message.invalid_arrival_date");
         }
 
-        if(bookingDto.getDate_of_departure().before(bookingDto.getArrival_date())){
-            errors.rejectValue("date_of_departure", "error.message.invalid_date_of_departure");
+        if(booking.getDateOfDeparture().before(booking.getArrivalDate())){
+            errors.rejectValue("dateOfDeparture", "error.message.invalid_date_of_departure");
         }
     }
 

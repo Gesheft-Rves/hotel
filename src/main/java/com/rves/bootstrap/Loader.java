@@ -73,11 +73,6 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
                 createBooking(user);
             }
         }
-
-//        for (int i = 0; i < 10; i++){
-//            Booking booking = createBooking();
-//        }
-
     }
 
     private User createUser(){
@@ -121,12 +116,12 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
         int rand = ThreadLocalRandom.current().nextInt(1, 9 + 1);
 
         Booking booking = new Booking();
-        booking.setDate_buking(new Timestamp(date));
+        booking.setDateBuking(new Timestamp(date));
         // рандом дата
-        booking.setArrival_date(new Timestamp(new java.util.Date().getTime()));
+        booking.setArrivalDate(new Timestamp(new java.util.Date().getTime()));
         //  +24 часа
-        booking.setDate_of_departure(
-               new Timestamp( booking.getArrival_date().getTime() + 1 * 24 * 60 * 60 * 1000));
+        booking.setDateOfDeparture(
+               new Timestamp( booking.getArrivalDate().getTime() + 1 * 24 * 60 * 60 * 1000));
 
         // rand - (1-10) гетает комнату с рандомным индексом
         booking.setRoom(roomsRepository.getOne(rand));
