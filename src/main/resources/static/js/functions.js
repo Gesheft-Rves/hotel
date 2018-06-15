@@ -58,10 +58,10 @@ function filter(header, token) {
                 var cellActions         = row.insertCell(6);
 
                 cellbookingId.innerHTML     = bookings[i].id;
-                cellDate.innerHTML          = new Date(bookings[i].date_buking).toLocaleString("ru", options);
+                cellDate.innerHTML          = new Date(bookings[i].dateBuking).toLocaleString("ru", options);
                 cellRoom.innerHTML          = bookings[i].room.no;
-                cellArrivalDate.innerHTML   = bookings[i].arrival_date;
-                cellDateDeparture.innerHTML = bookings[i].date_of_departure;
+                cellArrivalDate.innerHTML   = bookings[i].arrivalDate;
+                cellDateDeparture.innerHTML = bookings[i].dateOfDeparture;
                 cellAdmins.innerHTML        = bookings[i].user.username;
 
                 var id = bookings[i].id

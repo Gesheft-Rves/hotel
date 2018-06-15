@@ -22,8 +22,8 @@
                 <label class="col-sm-2 control-label" th:text="'Дата заезда'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <input type="date" placeholder="Введите дату заезда гостя" class="form-control" th:field="*{arrival_date}" th:required="required"/>
-                        <div th:if="${#fields.hasErrors('arrival_date')}" th:errors="*{arrival_date}" class="alert alert-danger" role="alert"></div>
+                        <input type="date" placeholder="Введите дату заезда гостя" class="form-control" th:field="*{arrivalDate}" th:required="required"/>
+                        <div th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}" class="alert alert-danger" role="alert"></div>
                     </div>
                 </div>
             </div>
@@ -32,8 +32,8 @@
                 <label class="col-sm-2 control-label" th:text="'Дата выезда'"></label>
                 <div class="col-sm-10">
                     <div class="col-sm-10">
-                        <input type="date" placeholder="Введите дату выезда гостя" class="form-control" th:field="*{date_of_departure}" th:required="required"/>
-                        <div th:if="${#fields.hasErrors('date_of_departure')}" th:errors="*{date_of_departure}" class="alert alert-danger" role="alert"></div>
+                        <input type="date" placeholder="Введите дату выезда гостя" class="form-control" th:field="*{dateOfDeparture}" th:required="required"/>
+                        <div th:if="${#fields.hasErrors('dateOfDeparture')}" th:errors="*{dateOfDeparture}" class="alert alert-danger" role="alert"></div>
                     </div>
                 </div>
             </div>

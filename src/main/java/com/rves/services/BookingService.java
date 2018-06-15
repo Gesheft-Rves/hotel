@@ -69,7 +69,7 @@ public class BookingService implements PojoService<Booking> {
         List<Booking> arrayInvalidBooking = new ArrayList<>();
 
         for (Booking booking : bookings) {
-            departureCalendar.setTime(booking.getDate_of_departure());
+            departureCalendar.setTime(booking.getDateOfDeparture());
             long bookingEndDay = departureCalendar.get(Calendar.DAY_OF_MONTH);
 
             if (today == bookingEndDay){
@@ -81,10 +81,10 @@ public class BookingService implements PojoService<Booking> {
 
     public Booking saveFromDto (BookingDto bookingDto) {
         Booking booking = new Booking();
-        booking.setDate_buking(bookingDto.getDate_buking());
+        booking.setDateBuking(bookingDto.getDateBuking());
         booking.setRoom(bookingDto.getRoom());
-        booking.setArrival_date(bookingDto.getArrival_date());
-        booking.setDate_of_departure(bookingDto.getDate_of_departure());
+        booking.setArrivalDate(bookingDto.getArrivalDate());
+        booking.setDateOfDeparture(bookingDto.getDateOfDeparture());
         booking.setUser(userService.getCurrentLoggedInUser());
         booking.setCanceled(false);
         return repository.save(booking);
@@ -107,7 +107,7 @@ public class BookingService implements PojoService<Booking> {
             for (Booking currentBooking:bookings) {
                 if (!currentBooking.isCanceled()){
                     if (currentRoom.getId().equals(currentBooking.getRoom().getId())) {
-                        if (  !((fromDate .after(currentBooking.getDate_of_departure()))||(toDate.before(currentBooking.getArrival_date())))  ){
+                        if (  !((fromDate .after(currentBooking.getDateOfDeparture()))||(toDate.before(currentBooking.getArrivalDate())))  ){
                             continue outer;
                         }
                     }
@@ -141,14 +141,14 @@ public class BookingService implements PojoService<Booking> {
         // Filter by FromDate
         if (dateFrom != null){
             result = result.stream()
-                    .filter(e -> e.getDate_buking().compareTo(dateFrom) >= 0)
+                    .filter(e -> e.getDateBuking().compareTo(dateFrom) >= 0)
                     .collect(Collectors.toList());
         }
 
         /* Filter by ToDate*/
         if (dateTo != null){
             result = result.stream()
-                    .filter(e -> e.getDate_buking().compareTo(dateTo) <= 0)
+                    .filter(e -> e.getDateBuking().compareTo(dateTo) <= 0)
                     .collect(Collectors.toList());
         }
 
@@ -162,26 +162,26 @@ public class BookingService implements PojoService<Booking> {
         /* Filter by dateArrival*/
         if (dateFromArrivalFilter != null){
             result = result.stream()
-                    .filter(e -> e.getArrival_date().compareTo(dateFromArrivalFilter) >= 0)
+                    .filter(e -> e.getArrivalDate().compareTo(dateFromArrivalFilter) >= 0)
                     .collect(Collectors.toList());
         }
 
         if (dateToArrivalFilter != null){
             result = result.stream()
-                    .filter(e -> e.getArrival_date().compareTo(dateToArrivalFilter) <= 0)
+                    .filter(e -> e.getArrivalDate().compareTo(dateToArrivalFilter) <= 0)
                     .collect(Collectors.toList());
         }
 
         /* Filter by dateDeparture*/
         if (dateFromDepartureFilter != null){
             result = result.stream()
-                    .filter(e -> e.getDate_of_departure().compareTo(dateFromDepartureFilter) >= 0)
+                    .filter(e -> e.getDateOfDeparture().compareTo(dateFromDepartureFilter) >= 0)
                     .collect(Collectors.toList());
         }
 
         if (dateToDepartureFilter != null){
             result = result.stream()
-                    .filter(e -> e.getDate_of_departure().compareTo(dateToDepartureFilter) <= 0)
+                    .filter(e -> e.getDateOfDeparture().compareTo(dateToDepartureFilter) <= 0)
                     .collect(Collectors.toList());
         }
 

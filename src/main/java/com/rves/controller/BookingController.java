@@ -94,9 +94,9 @@ public class BookingController {
         booking.setCanceled(bookingDto.isCanceled());
         booking.setUser(bookingDto.getUser());
         booking.setRoom(bookingDto.getRoom());
-        booking.setArrival_date(bookingDto.getArrival_date());
-        booking.setDate_of_departure(bookingDto.getDate_of_departure());
-        booking.setDate_buking(bookingDto.getDate_buking());
+        booking.setArrivalDate(bookingDto.getArrivalDate());
+        booking.setDateOfDeparture(bookingDto.getDateOfDeparture());
+        booking.setDateBuking(bookingDto.getDateBuking());
 
         bookingValidator.validate(bookingDto, bindingResult);
 
@@ -114,8 +114,8 @@ public class BookingController {
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model){
         Room freeRoom = bookingService.freeRoomSearch(
-                bookingDto.getArrival_date(),
-                bookingDto.getDate_of_departure(),
+                bookingDto.getArrivalDate(),
+                bookingDto.getDateOfDeparture(),
                 bookingDto.getRoomType().getId()
         );
 
