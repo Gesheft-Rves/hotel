@@ -57,7 +57,10 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        if (1==1) return;
+        if (1==1) {
+            createSuperUser();
+            return;
+        }
 
         for (int t = 0; t < 5; t++ ){
             RoomType roomType = createRoomType();
@@ -73,6 +76,20 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
                 createBooking(user);
             }
         }
+    }
+
+    private User createSuperUser() {
+        User user = new User();
+
+        user.setAuthorities(Arrays.asList(Role.ROLE_SUPER));
+        user.setUsername("admin");
+        user.setPassword("admin");
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        userRepo.save(user);
+        return user;
     }
 
     private User createUser(){
