@@ -28,7 +28,7 @@ public class Booking {
     @Column
     private Timestamp dateOfDeparture;
 
-    @Column(name = "lastDayCleaning")
+    @Column
     private Timestamp lastDayCleaning;
 
     @OneToOne

@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-
-
 @Component
 public class BookingValidator implements Validator {
 
@@ -44,14 +42,14 @@ public class BookingValidator implements Validator {
         }
     }
 
-    private boolean isValidArrivalDate(Timestamp d){
+    private boolean isValidArrivalDate(Timestamp timestampArrivalDate){
         GregorianCalendar currentDate = new GregorianCalendar();
         Timestamp currentTimestampDate = new Timestamp (new Date().getTime());
         currentDate.setTimeInMillis(currentTimestampDate.getTime());
 
 
         GregorianCalendar arrivalDate = new GregorianCalendar();
-        arrivalDate.setTimeInMillis(d.getTime());
+        arrivalDate.setTimeInMillis(timestampArrivalDate.getTime());
 
 
         int arrYear = arrivalDate.get(Calendar.YEAR);
@@ -83,5 +81,4 @@ public class BookingValidator implements Validator {
 
         return true;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.rves.Dto;
 
-import com.rves.Utils;
+import com.rves.utils.StringUtils;
+import com.rves.utils.TimeFormattingUtils;
 import com.rves.pojo.Room;
 import com.rves.pojo.RoomType;
 import com.rves.pojo.User;
@@ -52,9 +53,16 @@ public class BookingDto {
     }
 
     public void parseDates() {
-        this.arrivalDate = Utils.parseDateFromStringOrNow(arrivalDateStr);
-        this.dateOfDeparture = Utils.parseDateFromStringOrNow(dateOfDepartureStr);
-        this.dateBuking = Utils.parseDateFromStringOrNow(dateBukingStr);
+        this.arrivalDate     = getTimestampFromStr(arrivalDateStr);
+        this.dateOfDeparture = getTimestampFromStr(dateOfDepartureStr);
+        this.dateBuking      = getTimestampFromStr(dateBukingStr);
+    }
+
+    private Timestamp getTimestampFromStr(String str) {
+        return StringUtils.isEmpty(str)
+                ? new Timestamp(System.currentTimeMillis())
+                : TimeFormattingUtils.parseTimestampFromWeb(str);
+
     }
 
 }

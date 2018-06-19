@@ -1,6 +1,6 @@
 package com.rves.Dto;
 
-import com.rves.Utils;
+import com.rves.utils.TimeFormattingUtils;
 import com.rves.bootstrap.ApplicationContextHolder;
 import com.rves.services.RoomTypeService;
 import lombok.Getter;
@@ -31,11 +31,11 @@ public class CurrentFilterRoom {
 
         dateFromArrivalFilter = "".equals(dateFromArrivalFilterStr)
                 ? null
-                : Utils.parseDateFromStringOrNow(dateFromArrivalFilterStr);
+                : TimeFormattingUtils.parseTimestampFromWeb(dateFromArrivalFilterStr);
 
         dateFromDepartureFilter = "".equals(dateFromDepartureFilterStr)
                 ? null
-                : Utils.parseDateFromStringOrNow(dateFromDepartureFilterStr);
+                : TimeFormattingUtils.parseTimestampFromWeb(dateFromDepartureFilterStr);
 
         roomTypeFilter = "".equals(roomTypeFilterStr)
                 ? null
