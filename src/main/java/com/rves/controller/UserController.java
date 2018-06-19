@@ -26,7 +26,7 @@ public class UserController {
     @RequestMapping("/users/list")
     public String list(Model model){
         model.addAttribute("users", userService.list());
-        return "/users/list";
+        return "users/list";
     }
 
     @RequestMapping("/users/delete/{id}")
@@ -39,14 +39,14 @@ public class UserController {
     public String editUser(@PathVariable Integer id, Model model){
         model.addAttribute("usersList", userService.list());
         model.addAttribute("user", userService.getById(id));
-        return "/users/form";
+        return "users/form";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registrationNewUser(Model model) {
         model.addAttribute("userForm", new UserDto());
 
-        return "/register";
+        return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -56,7 +56,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
 
-            return "/register";
+            return "register";
         }
 
         userService.createUser(userForm);
@@ -80,6 +80,6 @@ public class UserController {
     @RequestMapping("/users/details/{id}")
     public String details(@PathVariable Integer id, Model model){
         model.addAttribute("user", userService.getById(id));
-        return "/users/details";
+        return "users/details";
     }
 }

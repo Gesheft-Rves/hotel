@@ -29,7 +29,7 @@ public class RoomsController {
     @RequestMapping("/rooms/list")
     public String list(Model model){
         model.addAttribute("rooms", service.list());
-        return "/rooms/list";
+        return "rooms/list";
     }
 
     @RequestMapping("/rooms/delete/{id}")
@@ -43,14 +43,14 @@ public class RoomsController {
         model.addAttribute("rooms", service.list());
         model.addAttribute("room", service.getById(id));
         model.addAttribute("roomTypes", roomTypeService.list());
-        return "/rooms/form";
+        return "rooms/form";
     }
 
     @RequestMapping("/rooms/new")
     public String newGroup(Model model){
         model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("room", new Room());
-        return "/rooms/form";
+        return "rooms/form";
     }
 
     @RequestMapping(value = "/rooms/save", method = RequestMethod.POST)
@@ -62,7 +62,7 @@ public class RoomsController {
     @RequestMapping("/rooms/details/{id}")
     public String details(@PathVariable Integer id, Model model){
         model.addAttribute("room", service.getById(id));
-        return "/rooms/details";
+        return "rooms/details";
     }
 
     @RequestMapping("/rooms/reverse_status/{id}")
@@ -75,7 +75,7 @@ public class RoomsController {
         }
         service.save(room);
         model.addAttribute("room", room);
-        return "/rooms/details";
+        return "rooms/details";
     }
 
 }

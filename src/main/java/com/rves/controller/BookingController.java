@@ -58,7 +58,7 @@ public class BookingController {
     public String list(Model model){
         model.addAttribute("bookings", bookingService.list());
         model.addAttribute("users",userService.list());
-        return "/booking/list";
+        return "booking/list";
     }
 
     @RequestMapping("/booking/delete/{id}")
@@ -72,7 +72,7 @@ public class BookingController {
         model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("roomslist", roomsService.list());
         model.addAttribute("booking", bookingService.getById(id));
-        return "/booking/forEdit";
+        return "booking/forEdit";
     }
 
     @RequestMapping("/booking/new")
@@ -80,7 +80,7 @@ public class BookingController {
         model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("roomslist", roomsService.list());
         model.addAttribute("booking", new BookingDto());
-        return "/booking/createbooking";
+        return "booking/createbooking";
     }
 
     @RequestMapping(value = "/booking/saveEdited", method = RequestMethod.POST)
@@ -101,7 +101,7 @@ public class BookingController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("roomTypes", roomTypeService.list());
             model.addAttribute("roomslist",  roomsService.list());
-            return "/booking/forEdit";
+            return "booking/forEdit";
         }
 
         bookingService.save(booking);
@@ -120,7 +120,7 @@ public class BookingController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("roomTypes", roomTypeService.list());
             model.addAttribute("roomslist",  roomsService.list());
-            return "/booking/createbooking";
+            return "booking/createbooking";
         }
         Booking createdBookingEntry = bookingService.saveFromDto(booking);
         return "redirect:/booking/details/" + createdBookingEntry.getId();
@@ -129,7 +129,7 @@ public class BookingController {
     @RequestMapping("/booking/details/{id}")
     public String details(@PathVariable Integer id, Model model){
         model.addAttribute("booking", bookingService.getById(id));
-        return "/booking/details";
+        return "booking/details";
 
     }
 
@@ -180,6 +180,6 @@ public class BookingController {
         }
         bookingService.save(booking);
         model.addAttribute("booking", booking);
-        return "/booking/details";
+        return "booking/details";
     }
 }

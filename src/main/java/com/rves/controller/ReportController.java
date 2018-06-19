@@ -38,7 +38,7 @@ public class ReportController {
     public String repotPage(Model model){
         model.addAttribute("users", userService.list());
         model.addAttribute("report", new ReportDTO());
-        return "/reports/reports";
+        return "reports/reports";
     }
 
     //Receiving parameters for generating the report

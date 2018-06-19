@@ -22,7 +22,7 @@ public class RoomTypeController {
     @RequestMapping("/type/list")
     public String list(Model model){
         model.addAttribute("typeRoomList", service.list());
-        return "/type/list";
+        return "type/list";
     }
 
     @RequestMapping("/type/delete/{id}")
@@ -35,13 +35,13 @@ public class RoomTypeController {
     public String edit(@PathVariable  Integer id, Model model){
         model.addAttribute("typeRoomList", service.list());
         model.addAttribute("typeRoom", service.getById(id));
-        return "/type/form";
+        return "type/form";
     }
 
     @RequestMapping("/type/new")
     public String newCateg(Model model){
         model.addAttribute("typeRoom", new RoomType());
-        return "/type/form";
+        return "type/form";
     }
 
     @RequestMapping(value = "/type/save", method = RequestMethod.POST)
@@ -53,6 +53,6 @@ public class RoomTypeController {
     @RequestMapping("/type/details/{id}")
     public String details(@PathVariable Integer id, Model model){
         model.addAttribute("types", service.getById(id));
-        return "/type/details";
+        return "type/details";
     }
 }

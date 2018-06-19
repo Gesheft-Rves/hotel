@@ -15,7 +15,7 @@ public class AuthorizationController {
                            Model model){
         model.addAttribute("error", error != null);
         model.addAttribute("logout", logout != null);
-        return "/login";
+        return "login";
     }
 
 
