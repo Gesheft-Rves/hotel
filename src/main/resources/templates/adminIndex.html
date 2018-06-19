@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+
+    <title>Hotel Russia</title>
+    <!--/*/ <th:block th:include="fragments/header :: head"></th:block> /*/-->
 </head>
 <body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div class ="jumbotron">
+        <h1 th:text="${message}" />
+    </div>
+    <div class="col-sm-12">
 
+        <a th:href="${'/register'}"> Создать нового пользователя </a>
+
+        <a th:href="${'/'}"> Сгенерировать отчет по броням </a>
+        <div th:if="${not #lists.isEmpty(users)}">
+            <h2> Список пользователей </h2>
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="ID"></th>
+                    <th th:text="Статус"></th>
+                    <th th:text="Имя"></th>
+                    <th th:text="Роль"></th>
+                    <th th:text="Действия"></th>
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.enabled == true} ? 'Активный' : 'Заблокирован'"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.authorities}"></td>
+                    <td>
+                        <ul class="list-inline">
+                            <li><a th:href="${'/users/delete/' + user.id}" th:text="Удалить"></a> </li>
+                            <li><a th:href="${'/users/edit/' + user.id}" th:text="Редактировать"></a> </li>
+                            <li><a th:href="${'/users/details/' + user.id}" th:text="Карточка"></a> </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
+

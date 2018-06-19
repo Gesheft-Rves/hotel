@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-
 
 
 @Component
@@ -43,20 +42,14 @@ public class BookingValidator implements Validator {
         }
     }
 
-    private boolean isValidArrivalDate(Date d){
+    private boolean isValidArrivalDate(Timestamp timestampArrivalDate){
         GregorianCalendar currentDate = new GregorianCalendar();
-        currentDate.setTime(new Date());
-        currentDate.set(Calendar.MILLISECOND,0);
-        currentDate.set(Calendar.SECOND,0);
-        currentDate.set(Calendar.MINUTE,0);
-//        currentDate.set(Calendar.HOUR,0);
+        Timestamp currentTimestampDate = new Timestamp (new Date().getTime());
+        currentDate.setTimeInMillis(currentTimestampDate.getTime());
+
 
         GregorianCalendar arrivalDate = new GregorianCalendar();
-        arrivalDate.setTime(d);
-        arrivalDate.set(Calendar.MILLISECOND,0);
-        arrivalDate.set(Calendar.SECOND,0);
-        arrivalDate.set(Calendar.MINUTE,0);
-//        arrivalDate.set(Calendar.HOUR,0);
+        arrivalDate.setTimeInMillis(timestampArrivalDate.getTime());
 
 
         int arrYear = arrivalDate.get(Calendar.YEAR);
@@ -68,9 +61,11 @@ public class BookingValidator implements Validator {
         int arrDay = arrivalDate.get(Calendar.DATE);
         int currDay = currentDate.get(Calendar.DATE);
 
-//        int arrHour = arrivalDate.get(Calendar.HOUR);
-//        int currHour = currentDate.get(Calendar.HOUR);
+        int arrHour = arrivalDate.get(Calendar.HOUR);
+        int currHour = currentDate.get(Calendar.HOUR);
 
+        int arrMinute = arrivalDate.get(Calendar.MINUTE);
+        int currMinute = currentDate.get(Calendar.MINUTE);
 
         if (arrYear < currYear){
             return false;
@@ -78,9 +73,12 @@ public class BookingValidator implements Validator {
             return false;
         } else if (arrDay < currDay && arrMonth <= currMonth && arrYear <= currYear){
             return false;
+        } else if (arrHour < currHour && arrDay <= currDay && arrMonth <= currMonth && arrYear <= currYear){
+            return false;
+        } else if (arrMinute < currMinute && arrHour <= currHour && arrDay <= currDay && arrMonth <= currMonth && arrYear <= currYear){
+            return false;
         }
 
         return true;
     }
-
 }

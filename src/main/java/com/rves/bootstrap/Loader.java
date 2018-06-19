@@ -12,7 +12,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
@@ -74,11 +73,6 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
                 createBooking(user);
             }
         }
-
-//        for (int i = 0; i < 10; i++){
-//            Booking booking = createBooking();
-//        }
-
     }
 
     private User createUser(){
@@ -124,10 +118,10 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
         Booking booking = new Booking();
         booking.setDateBuking(new Timestamp(date));
         // рандом дата
-        booking.setArrivalDate(new Date(new java.util.Date().getTime()));
+        booking.setArrivalDate(new Timestamp(new java.util.Date().getTime()));
         //  +24 часа
         booking.setDateOfDeparture(
-               new Date( booking.getArrivalDate().getTime() + 1 * 24 * 60 * 60 * 1000));
+               new Timestamp( booking.getArrivalDate().getTime() + 1 * 24 * 60 * 60 * 1000));
 
         // rand - (1-10) гетает комнату с рандомным индексом
         booking.setRoom(roomsRepository.getOne(rand));

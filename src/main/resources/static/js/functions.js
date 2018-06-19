@@ -60,8 +60,8 @@ function filter(header, token) {
                 cellbookingId.innerHTML     = bookings[i].id;
                 cellDate.innerHTML          = new Date(bookings[i].dateBuking).toLocaleString("ru", options);
                 cellRoom.innerHTML          = bookings[i].room.no;
-                cellArrivalDate.innerHTML   = bookings[i].arrivalDate;
-                cellDateDeparture.innerHTML = bookings[i].dateOfDeparture;
+                cellArrivalDate.innerHTML   = new Date(bookings[i].arrivalDate).toLocaleString("ru", options);
+                cellDateDeparture.innerHTML = new Date(bookings[i].dateOfDeparture).toLocaleString("ru", options);
                 cellAdmins.innerHTML        = bookings[i].user.username;
 
                 var id = bookings[i].id
@@ -89,3 +89,55 @@ function filter(header, token) {
     }
 }
 
+function getRoomsFromServerApi(header, token) {
+    var arrivalDate   = $("#dateFromArrivalFilter").val();
+    var departureDate = $("#dateFromDepartureFilter").val();
+    var roomType = $("#roomTypeFilter").val();
+
+    var roomDiv = $("#roomSelectDiv");
+    var warnDiv = $("#warningDiv");
+
+
+    if (arrivalDate == '' || departureDate == '' || roomType == '') {
+        roomDiv.hide();
+        warnDiv.show();
+        return false ;
+    }
+
+    roomDiv.show();
+    warnDiv.hide();
+
+    var search = {}
+    search["dateFromArrivalFilterStr"]     = arrivalDate;
+    search["dateFromDepartureFilterStr"]   = departureDate;
+    search["roomTypeFilterStr"]   = roomType;
+
+    $.ajax({
+        type: "POST",
+        url: "/booking/api/roomFilter",
+        data: JSON.stringify(search),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+
+        beforeSend: function(xhr){ xhr.setRequestHeader(header, token);},
+
+        success: function (data) {
+            updateRooms(data.rooms);
+        }
+    })
+}
+
+function updateRooms(rooms) {
+    /*<![CDATA[*/
+
+    var options = "<option value='' selected='selected' >Select to Filter..</option>";
+    for (var i = 0; i < rooms.length; i++) {
+        options += "<option value='"+rooms[i].id+"' text='"+rooms[i].no+"'>"+rooms[i].no+"</option>"
+    }
+    $('#rooms').html(options);
+}

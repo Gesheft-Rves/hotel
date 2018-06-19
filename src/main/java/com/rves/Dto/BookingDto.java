@@ -1,5 +1,7 @@
 package com.rves.Dto;
 
+import com.rves.utils.StringUtils;
+import com.rves.utils.TimeFormattingUtils;
 import com.rves.pojo.Room;
 import com.rves.pojo.RoomType;
 import com.rves.pojo.User;
@@ -8,10 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -28,20 +27,19 @@ public class BookingDto {
     @NotNull
     private Integer id;
 
-    @FutureOrPresent
     @NotNull
     private Timestamp dateBuking;
-
+    private String dateBukingStr;
     @NotNull
     private Room room;
 
-    @FutureOrPresent
     @NotNull
-    private Date arrivalDate;
+    private Timestamp arrivalDate;
+    private String arrivalDateStr;
 
-    @Future
     @NotNull
-    private Date dateOfDeparture;
+    private Timestamp dateOfDeparture;
+    private String dateOfDepartureStr;
 
     private RoomType roomType;
 
@@ -53,4 +51,18 @@ public class BookingDto {
         java.util.Date date = new java.util.Date();
         return new Timestamp(date.getTime());
     }
+
+    public void parseDates() {
+        this.arrivalDate     = getTimestampFromStr(arrivalDateStr);
+        this.dateOfDeparture = getTimestampFromStr(dateOfDepartureStr);
+        this.dateBuking      = getTimestampFromStr(dateBukingStr);
+    }
+
+    private Timestamp getTimestampFromStr(String str) {
+        return StringUtils.isEmpty(str)
+                ? new Timestamp(System.currentTimeMillis())
+                : TimeFormattingUtils.parseTimestampFromWeb(str);
+
+    }
+
 }

@@ -1,8 +1,6 @@
 package com.rves.controller;
 
-import com.rves.Dto.AjaxResponseBody;
-import com.rves.Dto.BookingDto;
-import com.rves.Dto.CurrentFilterBooking;
+import com.rves.Dto.*;
 import com.rves.pojo.Booking;
 import com.rves.pojo.Room;
 import com.rves.services.BookingService;
@@ -112,24 +110,19 @@ public class BookingController {
 
 
     @RequestMapping(value = "/booking/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("booking") BookingDto bookingDto , BindingResult bindingResult, Model model){
-        Room freeRoom = bookingService.freeRoomSearch(
-                bookingDto.getArrivalDate(),
-                bookingDto.getDateOfDeparture(),
-                bookingDto.getRoomType().getId()
-        );
+    public String save(@ModelAttribute("booking") BookingDto booking , BindingResult bindingResult, Model model){
 
-        bookingDto.setRoom(freeRoom);
-        bookingDto.setUser(userService.getCurrentLoggedInUser());
+        booking.parseDates();
 
-        bookingValidator.validate(bookingDto, bindingResult);
+        booking.setUser(userService.getCurrentLoggedInUser());
+        bookingValidator.validate(booking, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("roomTypes", roomTypeService.list());
             model.addAttribute("roomslist",  roomsService.list());
             return "/booking/createbooking";
         }
-        Booking createdBookingEntry = bookingService.saveFromDto(bookingDto);
+        Booking createdBookingEntry = bookingService.saveFromDto(booking);
         return "redirect:/booking/details/" + createdBookingEntry.getId();
     }
 
@@ -138,6 +131,24 @@ public class BookingController {
         model.addAttribute("booking", bookingService.getById(id));
         return "/booking/details";
 
+    }
+
+    @RequestMapping(value = "/booking/api/roomFilter", method = RequestMethod.POST)
+    public ResponseEntity<?> filter(@Valid @RequestBody CurrentFilterRoom filter, Errors errors){
+        AjaxRoomsResponseBody result = new AjaxRoomsResponseBody();
+        if (errors.hasErrors()){
+            result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+            return ResponseEntity.badRequest().body(result);
+        }
+        List<Room> rooms = bookingService.findAllMatchingCriteria(filter);
+        result.setRooms(rooms);
+
+        if (rooms.isEmpty()) {
+            result.setMsg("no bookings found!");
+        } else {
+            result.setMsg("success");
+        }
+        return ResponseEntity.ok(result);
     }
 
     @RequestMapping("/booking/api/filter")
