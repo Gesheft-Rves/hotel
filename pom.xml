@@ -5,10 +5,10 @@
 
 	<groupId>com.rves</groupId>
 	<artifactId>hotel</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<name>hotel</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Hotel Application</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
