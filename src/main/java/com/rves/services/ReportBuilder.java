@@ -63,12 +63,12 @@ public class ReportBuilder {
             Cell dateOfDepartureCell = row.createCell(cellNum++);
             Cell userCell = row.createCell(cellNum++);
 
-            String strBookingDate = booking.getDate_buking().toString().replace("T"," ");
+            String strBookingDate = booking.getDateBuking().toString().replace("T"," ");
 
             bookingDateCell.setCellValue(strBookingDate);
             roomCell.setCellValue(booking.getRoom().getNo());
-            arrivalDateCell.setCellValue(dateFormat.format(booking.getArrival_date()));
-            dateOfDepartureCell.setCellValue(dateFormat.format(booking.getDate_of_departure()));
+            arrivalDateCell.setCellValue(dateFormat.format(booking.getArrivalDate()));
+            dateOfDepartureCell.setCellValue(dateFormat.format(booking.getDateOfDeparture()));
             userCell.setCellValue(booking.getUser().getUsername());
         }
 

@@ -69,7 +69,7 @@ public class BookingService implements PojoService<Booking> {
         if (dateFromReport != null){
             result = result.stream()
                     .filter(booking -> {
-                        long bookingTime = booking.getDate_buking().getTime();
+                        long bookingTime = booking.getDateBuking().getTime();
                         return bookingTime > dateFromTime;
                     })
                     .collect(Collectors.toList());
@@ -79,7 +79,7 @@ public class BookingService implements PojoService<Booking> {
         if (dateToReport != null){
             result = result.stream()
                     .filter(booking -> {
-                        long bookingTime = booking.getDate_buking().getTime();
+                        long bookingTime = booking.getDateBuking().getTime();
                         return bookingTime < dateToTime;
                     })
                     .collect(Collectors.toList());
