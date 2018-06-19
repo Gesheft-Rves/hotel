@@ -57,7 +57,7 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-
+        if (1==1) return;
 
         for (int t = 0; t < 5; t++ ){
             RoomType roomType = createRoomType();
