@@ -133,6 +133,20 @@ public class BookingService implements PojoService<Booking> {
         return repository.save(booking);
     }
 
+    public BookingDto saveDtoToBooking (Booking booking) {
+        BookingDto tepmBookingDTO = new BookingDto();
+
+        tepmBookingDTO.setId(booking.getId());
+        tepmBookingDTO.setDateBuking(booking.getDateBuking());
+        tepmBookingDTO.setArrivalDate(booking.getArrivalDate());
+        tepmBookingDTO.setDateOfDeparture(booking.getDateOfDeparture());
+        tepmBookingDTO.setCanceled(booking.isCanceled());
+        tepmBookingDTO.setUser(booking.getUser());
+        tepmBookingDTO.setRoom(booking.getRoom());
+
+        return tepmBookingDTO;
+    }
+
     public List<Room> findAllMatchingCriteria(CurrentFilterRoom filterRoom){
 
         filterRoom.parse();

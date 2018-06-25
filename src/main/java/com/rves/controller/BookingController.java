@@ -71,7 +71,7 @@ public class BookingController {
     public String edit(@PathVariable  Integer id, Model model){
         model.addAttribute("roomTypes", roomTypeService.list());
         model.addAttribute("roomslist", roomsService.list());
-        model.addAttribute("booking", bookingService.getById(id));
+        model.addAttribute("booking", bookingService.saveDtoToBooking(bookingService.getById(id)));
         return "booking/forEdit";
     }
 
@@ -85,16 +85,16 @@ public class BookingController {
 
     @RequestMapping(value = "/booking/saveEdited", method = RequestMethod.POST)
     public String saveEditedRoom(@ModelAttribute("booking") Booking booking, Integer id, BookingDto bookingDto , BindingResult bindingResult, Model model){
-        bookingDto.setUser(userService.getCurrentLoggedInUser());
 
         booking = bookingService.getById(id);
 
+        bookingDto.parseDates();
         booking.setCanceled(bookingDto.isCanceled());
-        booking.setUser(bookingDto.getUser());
+        booking.setUser(userService.getCurrentLoggedInUser());
         booking.setRoom(bookingDto.getRoom());
+        booking.setDateBuking(bookingDto.getDateBuking());
         booking.setArrivalDate(bookingDto.getArrivalDate());
         booking.setDateOfDeparture(bookingDto.getDateOfDeparture());
-        booking.setDateBuking(bookingDto.getDateBuking());
 
         bookingValidator.validate(bookingDto, bindingResult);
 

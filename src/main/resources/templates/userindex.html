@@ -22,6 +22,8 @@
                     <th>Дата заезда</th>
                     <th>Дата выезда</th>
                     <th>Администратор</th>
+                    <th>Состояние брони</th>
+                    <th>Действия</th>
                 </tr>
                 <tr th:each="booking : ${bookings}">
                     <td th:text="${booking.id}"></td>
@@ -30,10 +32,24 @@
                     <td th:text="${booking.arrivalDate}"></td>
                     <td th:text="${booking.dateOfDeparture}"></td>
                     <td th:with="user=${booking.user}" th:text="${user.username}"></td>
+
+                    <td>
+                        <div th:if="${booking.canceled} == false">
+                            <div class="alert alert-success text-center">
+                                <strong>Активна</strong>
+                            </div>
+                        </div>
+                        <div th:if="${booking.canceled} == true">
+                            <div class="alert alert-danger text-center">
+                                <strong>Завершена</strong>
+                            </div>
+                        </div>
+                    </td>
+
                     <td>
                         <ul class="list-inline">
-                            <li><a th:href="${'/booking/edit/' + booking.id}" th:text="Редактировать"></a> </li>
-                            <li><a th:href="${'/booking/details/' + booking.id}" th:text="Посмотреть"></a> </li>
+                            <li><a th:href="${'/booking/edit/' + booking.id}" th:text="Продлить"></a> </li>
+                            <li><a th:href="${'/booking/details/' + booking.id}" th:text="'Карточка брони'"></a> </li>
                         </ul>
                     </td>
                 </tr>

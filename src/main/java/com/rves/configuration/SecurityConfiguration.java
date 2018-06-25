@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/resources/**", "/login/**").permitAll()
             .antMatchers("/booking/**").hasAnyRole("SUPER","HOTEL_ADMIN")
 
-            .antMatchers("/rooms/details/").hasAnyRole("SUPER","HOTEL_ADMIN","HOTEL_CLEANER")
+            .antMatchers("/rooms/details/").hasAnyRole("SUPER","HOTEL_CLEANER")
             .antMatchers("/rooms/form/").hasAnyRole("SUPER","HOTEL_ADMIN")
             .antMatchers("/rooms/list/").hasAnyRole("SUPER","HOTEL_ADMIN")
 

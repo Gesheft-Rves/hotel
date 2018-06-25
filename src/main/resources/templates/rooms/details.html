@@ -29,13 +29,13 @@
                 <label class="col-sm-2 control-label">Статус номера</label>
                 <div class="col-sm-10">
                     <div th:if="${room.cleaningRequired} == false">
-                        <div class="alert alert-success">
+                        <div class="alert alert-success text-center">
                             <strong>Номер чист.</strong>
                         </div>
                         <a th:href="${'/rooms/reverse_status/' + room.id}" class="btn btn-default" role="button">Требуется уборка</a>
                     </div>
                     <div th:if="${room.cleaningRequired} == true">
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger text-center">
                             <strong>Номер не убран!</strong>
                         </div>
                         <a th:href="${'/rooms/reverse_status/' + room.id}" class="btn btn-default" role="button">Убрать номер</a>
