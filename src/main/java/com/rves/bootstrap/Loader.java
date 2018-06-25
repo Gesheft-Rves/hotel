@@ -7,6 +7,7 @@ import com.rves.repositories.RoomTypeRepository;
 import com.rves.repositories.RoomsRepository;
 import com.rves.repositories.UserRepository;
 import com.rves.services.BookingService;
+import com.rves.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -24,11 +25,16 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
     private RoomTypeRepository roomTypeRepo;
     private BookingRepository bookingRepository;
     private BookingService bookingService;
+    private UserService userService;
     private UserRepository userRepo;
     private static int userCount;
     private static int roomCount;
     private static int roomTypeCount;
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setBookingService(BookingService bookingService) {
@@ -58,7 +64,14 @@ public class Loader implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (1==1) {
-            createSuperUser();
+            List<User> users =  userService.list();
+            String role;
+            for (User user : users) {
+                role =  String.valueOf(user.getAuthorities());
+                if(role.equals("[ROLE_SUPER]")){
+                    return;
+                }
+            } createSuperUser();
             return;
         }
 

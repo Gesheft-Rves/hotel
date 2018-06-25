@@ -25,10 +25,10 @@
                 </tr>
                 <tr th:each="booking : ${bookings}">
                     <td th:text="${booking.id}"></td>
-                    <td th:text="${booking.date_buking}"></td>
+                    <td th:text="${booking.dateBuking}"></td>
                     <td th:with="room=${booking.room}" th:text="${room.no}"></td>
-                    <td th:text="${booking.arrival_date}"></td>
-                    <td th:text="${booking.date_of_departure}"></td>
+                    <td th:text="${booking.arrivalDate}"></td>
+                    <td th:text="${booking.dateOfDeparture}"></td>
                     <td th:with="user=${booking.user}" th:text="${user.username}"></td>
                     <td>
                         <ul class="list-inline">

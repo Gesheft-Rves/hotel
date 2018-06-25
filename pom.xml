@@ -24,9 +24,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven -->
-		<!-- Эта штука позволит многие вещи облегчить -->
-		<!-- олько еще плагин для идеи нужен чтоб на лету подхватывала -->
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok-maven</artifactId>
@@ -74,7 +72,7 @@
 			<artifactId>jquery</artifactId>
 			<version>2.1.4</version>
 		</dependency>
-		<!-- hot swapping, disable cache for template, enable live reload -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -86,7 +84,7 @@
 			<version>1.16.8</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate4 -->
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate4</artifactId>
@@ -111,7 +109,6 @@
 			<version>1.5.3</version>
 		</dependency>
 
-		<!-- опционально, библиотека добавит полезные теги для SPRING SECURITY в Thymeleaf шаблонах -->
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>

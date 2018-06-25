@@ -60,9 +60,7 @@ public class UserController {
         }
 
         userService.createUser(userForm);
-
-        securityServiceImpl.autologin(userForm.getUsername(), userForm.getMatchingPassword());
-
+        
         return "redirect:/home";
     }
 

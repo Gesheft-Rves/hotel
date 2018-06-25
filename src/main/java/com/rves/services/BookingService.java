@@ -146,7 +146,7 @@ public class BookingService implements PojoService<Booking> {
 
         outer:
         for (Room currentRoom : rooms) {
-            if (currentRoom.getType().getId().equals(roomType) && (!currentRoom.isCleaningRequired())) {
+            if (currentRoom.getType().getId().equals(roomType) && (currentRoom.isCleaningRequired())) {
                 continue;
             }
             for (Booking currentBooking : bookings) {
@@ -162,8 +162,8 @@ public class BookingService implements PojoService<Booking> {
         }
 
         result = result.stream()
-                    .filter(e -> e.getType().getId().equals(roomType))
-                    .collect(Collectors.toList());
+                .filter(e -> e.getType().getId().equals(roomType))
+                .collect(Collectors.toList());
 
         return result;
     }

@@ -28,7 +28,7 @@ public class MainController {
         String role = String.valueOf(userService.loadUserByUsername(name).getAuthorities());
 
         switch (role) {
-            case ("ROLE_SUPER"):
+            case ("[ROLE_SUPER]"):
                 model.addAttribute("message", "Добро пожаловать в отель, " + name);
                 updateModelForAdmin(model);
                 return "adminIndex";
