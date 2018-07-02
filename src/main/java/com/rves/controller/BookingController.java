@@ -173,10 +173,13 @@ public class BookingController {
     @RequestMapping("/booking/cancellation/{id}")
     public String reverseStatusRoom(@PathVariable Integer id, Model model){
         Booking booking = bookingService.getById(id);
+        Room room = booking.getRoom();
         if (!booking.isCanceled()) {
             booking.setCanceled(true);
+            room.setCleaningRequired(true);
         } else if (booking.isCanceled()){
             booking.setCanceled(false);
+            room.setCleaningRequired(false);
         }
         bookingService.save(booking);
         model.addAttribute("booking", booking);
