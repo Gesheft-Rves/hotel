@@ -11,13 +11,13 @@
     <div class ="jumbotron">
         <h1 th:text="${message}" />
     </div>
-    <div class="col-sm-12">
+    <div class="container">
 
         <a th:href="${'/register'}"> Создать нового пользователя </a>
 
         <div th:if="${not #lists.isEmpty(users)}">
             <h2> Список пользователей </h2>
-            <table class="table table-striped">
+            <table class="table table-striped table-responsive">
                 <tr>
                     <th th:text="ID"></th>
                     <th th:text="Статус"></th>

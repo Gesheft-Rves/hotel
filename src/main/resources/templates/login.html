@@ -12,7 +12,7 @@
 
     <h2 th:text="Авторизация"/>
 
-    <div class="row">
+    <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" text="Добро пожаловать, авторизуйтесь"></h3>
@@ -24,11 +24,11 @@
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <div class="form-group">
                         <label for="username">Имя пользователя</label>
-                        <input type="text" class="form-control" id="username" placeholder="Введите имя пользователя" name="username"/>
+                        <input type="text" class="form-control form-control-lg" id="username" placeholder="Введите имя пользователя" name="username"/>
                     </div>
                     <div class="form-group">
                         <label for="password">Пароль пользователя</label>
-                        <input type="password" class="form-control" id="password" placeholder="Введите пароль пользователя" name="password"/>
+                        <input type="password" class="form-control form-control-lg" id="password" placeholder="Введите пароль пользователя" name="password"/>
                     </div>
 
                     <div class="btn-group" role="group">

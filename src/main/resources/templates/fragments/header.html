@@ -19,28 +19,35 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-
-<div class="container">
-    <div th:fragment="header">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" th:href="@{/}" th:text="Домой"></a>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" th:href="@{/rooms/list}" th:text="Номера"></a></li>
-                        <li><a href="#" th:href="@{/booking/list}" th:text="Бронирование"></a></li>
-                        <li><a href="#" th:href="@{/type/list}" th:text="Категории"></a></li>
-                        <li><a href="#" th:href="@{/users/list}" th:text="Пользователи"></a></li>
-                        <li><a href="#" th:href="@{/logout}" th:text="Выйти"></a></li>
-                        <li><a href="#" th:href="@{/reports/reports}" th:text="'Отчеты'"></a></li>
-                    </ul>
-                </div>
+<div th:fragment="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/}" th:text="Домой"></a>
             </div>
-        </nav>
-    </div>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" th:href="@{/rooms/list}" th:text="Номера"></a></li>
+                    <li><a href="#" th:href="@{/booking/list}" th:text="Бронирование"></a></li>
+                    <li><a href="#" th:href="@{/type/list}" th:text="Категории"></a></li>
+                    <li><a href="#" th:href="@{/users/list}" th:text="Пользователи"></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" th:href="@{/reports/reports}" th:text="'Отчеты'"></a></li>
+                    <li><a href="#" th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Выйти </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
 </body>
 </html>
